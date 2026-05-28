@@ -60,6 +60,8 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
   return (
     <html lang="en">
       <head>
+        <link rel="preconnect" href="https://nealfun.app" />
+        <link rel="dns-prefetch" href="https://nealfun.app" />
         <Script async src="https://www.googletagmanager.com/gtag/js?id=G-FJWM0N3HTC" strategy="afterInteractive" />
         <Script id="google-analytics" strategy="afterInteractive">
           {`

@@ -283,32 +283,56 @@ h3 {
   height: 100vh;
 }
 
-.game-loading {
+.game-start {
   position: absolute;
   inset: 0;
   display: grid;
   place-content: center;
   justify-items: center;
-  gap: 12px;
+  gap: 10px;
   padding: 18px;
-  color: var(--forest);
+  border: 0;
+  color: #fff;
   background: linear-gradient(180deg, #eef8e8, #dcefd2);
-  pointer-events: none;
+  cursor: pointer;
 }
 
-.game-loading img {
+.game-start img {
   width: min(318px, 72vw, 52vh);
   aspect-ratio: 1;
   border: 1px solid rgba(26, 46, 26, 0.18);
   border-radius: 8px;
   box-shadow: 0 16px 36px rgba(26, 46, 26, 0.18);
   object-fit: cover;
-  animation: cover-pulse 1.6s ease-in-out infinite;
 }
 
-.game-loading strong {
-  font-size: 0.98rem;
+.play-icon {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  display: grid;
+  place-items: center;
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  color: #fff;
+  background: rgba(26, 46, 26, 0.86);
+  box-shadow: 0 12px 30px rgba(0, 0, 0, 0.28);
+  font-size: 1.75rem;
+  line-height: 1;
+  transform: translate(-50%, -50%);
+  transition: background 0.2s ease, transform 0.2s ease;
+}
+
+.game-start strong {
+  color: var(--forest);
+  font-size: 1.05rem;
   font-weight: 950;
+}
+
+.game-start:hover .play-icon {
+  background: var(--blood);
+  transform: translate(-50%, -50%) scale(1.06);
 }
 
 .fullscreen-exit {
@@ -686,18 +710,6 @@ h3 {
   to {
     opacity: 1;
     transform: translateY(0);
-  }
-}
-
-@keyframes cover-pulse {
-  0%,
-  100% {
-    opacity: 0.92;
-    transform: scale(1);
-  }
-  50% {
-    opacity: 1;
-    transform: scale(1.025);
   }
 }
 

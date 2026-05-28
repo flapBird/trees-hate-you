@@ -45,11 +45,14 @@ const seededReviews = [
   }
 ];
 
+const gameUrl = "https://nealfun.app/game/trees-hate-you/index.html";
+
 export default function HomePage() {
   const gameWrapRef = useRef<HTMLDivElement>(null);
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
+  const [gameStarted, setGameStarted] = useState(false);
   const [hoverRating, setHoverRating] = useState(0);
   const [rating, setRating] = useState(5);
   const [formState, setFormState] = useState<"idle" | "submitting" | "success" | "error">("idle");
@@ -101,6 +104,10 @@ export default function HomePage() {
     if (document.fullscreenElement) {
       await document.exitFullscreen?.();
     }
+  }
+
+  function startGame() {
+    setGameStarted(true);
   }
 
   async function submitReview(event: FormEvent<HTMLFormElement>) {
@@ -176,14 +183,20 @@ export default function HomePage() {
               </div>
             </div>
             <div className="game-frame-wrap" ref={gameWrapRef}>
-              {/* 替换为游戏 HTML 文件路径：如需更换游戏文件，请修改下面 iframe 的 src */}
               <iframe
                 ref={iframeRef}
-                src="/trees-hate-you.embed.html"
+                src={gameStarted ? gameUrl : "about:blank"}
                 title="Trees Hate You playable game"
                 allow="fullscreen; gamepad"
                 allowFullScreen
               />
+              {!gameStarted && (
+                <button className="game-start" type="button" onClick={startGame} aria-label="Play Trees Hate You">
+                  <img src="/trees-hate-you-cover.jpg" alt="" />
+                  <span className="play-icon">▶</span>
+                  <strong>Play now</strong>
+                </button>
+              )}
               {isFullscreen && (
                 <button className="fullscreen-exit" type="button" aria-label="Exit fullscreen" title="Exit fullscreen" onClick={exitFullscreen}>
                   ×

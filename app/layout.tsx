@@ -71,7 +71,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             gtag('config', 'G-FJWM0N3HTC');
           `}
         </Script>
-        <script src="https://pl29575396.effectivecpmnetwork.com/4d/25/73/4d25731ffdaddeb34fb0b88cffecec65.js"></script>
+        <Script src="https://pl29575396.effectivecpmnetwork.com/4d/25/73/4d25731ffdaddeb34fb0b88cffecec65.js"></Script>
       </head>
       <body>
         <script

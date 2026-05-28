@@ -287,20 +287,28 @@ h3 {
   position: absolute;
   inset: 0;
   display: grid;
-  place-items: center;
-  gap: 8px;
-  color: #fff;
-  background: #162414;
+  place-content: center;
+  justify-items: center;
+  gap: 12px;
+  padding: 18px;
+  color: var(--forest);
+  background: linear-gradient(180deg, #eef8e8, #dcefd2);
   pointer-events: none;
 }
 
-.game-loading span {
-  font-size: 3.2rem;
-  animation: pulse-tree 1.4s ease-in-out infinite;
+.game-loading img {
+  width: min(318px, 72vw, 52vh);
+  aspect-ratio: 1;
+  border: 1px solid rgba(26, 46, 26, 0.18);
+  border-radius: 8px;
+  box-shadow: 0 16px 36px rgba(26, 46, 26, 0.18);
+  object-fit: cover;
+  animation: cover-pulse 1.6s ease-in-out infinite;
 }
 
 .game-loading strong {
-  font-size: 1rem;
+  font-size: 0.98rem;
+  font-weight: 950;
 }
 
 .fullscreen-exit {
@@ -681,15 +689,15 @@ h3 {
   }
 }
 
-@keyframes pulse-tree {
+@keyframes cover-pulse {
   0%,
   100% {
-    opacity: 0.78;
+    opacity: 0.92;
     transform: scale(1);
   }
   50% {
     opacity: 1;
-    transform: scale(1.06);
+    transform: scale(1.025);
   }
 }
 

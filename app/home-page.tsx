@@ -49,7 +49,6 @@ export default function HomePage() {
   const gameWrapRef = useRef<HTMLDivElement>(null);
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [menuOpen, setMenuOpen] = useState(false);
-  const [gameReady, setGameReady] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [hoverRating, setHoverRating] = useState(0);
   const [rating, setRating] = useState(5);
@@ -184,14 +183,7 @@ export default function HomePage() {
                 title="Trees Hate You playable game"
                 allow="fullscreen; gamepad"
                 allowFullScreen
-                onLoad={() => setGameReady(true)}
               />
-              {!gameReady && (
-                <div className="game-loading" aria-hidden="true">
-                  <span>🌲</span>
-                  <strong>The trees are waiting...</strong>
-                </div>
-              )}
               {isFullscreen && (
                 <button className="fullscreen-exit" type="button" aria-label="Exit fullscreen" title="Exit fullscreen" onClick={exitFullscreen}>
                   ×

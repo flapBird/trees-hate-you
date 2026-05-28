@@ -46,9 +46,11 @@ const seededReviews = [
 ];
 
 export default function HomePage() {
+  const gameWrapRef = useRef<HTMLDivElement>(null);
   const iframeRef = useRef<HTMLIFrameElement>(null);
   const [menuOpen, setMenuOpen] = useState(false);
   const [gameReady, setGameReady] = useState(false);
+  const [isFullscreen, setIsFullscreen] = useState(false);
   const [hoverRating, setHoverRating] = useState(0);
   const [rating, setRating] = useState(5);
   const [formState, setFormState] = useState<"idle" | "submitting" | "success" | "error">("idle");
@@ -78,13 +80,28 @@ export default function HomePage() {
     return () => observer.disconnect();
   }, []);
 
+  useEffect(() => {
+    const handleFullscreenChange = () => {
+      setIsFullscreen(document.fullscreenElement === gameWrapRef.current);
+    };
+
+    document.addEventListener("fullscreenchange", handleFullscreenChange);
+    return () => document.removeEventListener("fullscreenchange", handleFullscreenChange);
+  }, []);
+
   async function enterFullscreen() {
-    const frame = iframeRef.current;
-    if (!frame) {
+    const target = gameWrapRef.current;
+    if (!target) {
       return;
     }
 
-    await frame.requestFullscreen?.();
+    await target.requestFullscreen?.();
+  }
+
+  async function exitFullscreen() {
+    if (document.fullscreenElement) {
+      await document.exitFullscreen?.();
+    }
   }
 
   async function submitReview(event: FormEvent<HTMLFormElement>) {
@@ -146,18 +163,20 @@ export default function HomePage() {
 
       <main>
         <section className="hero" id="play" aria-label="Play Trees Hate You">
+          <div className="hero-copy">
+            <h1>Play Trees Hate You Online</h1>
+            <p>Short levels, cruel trees, instant retries. Start the demo, trust nothing, and try not to argue with a forest.</p>
+          </div>
           <div className="game-panel">
             <div className="game-bar">
               <div>
                 <strong>Trees Hate You</strong>
-                <span>Demo embedded below. The forest is not your friend.</span>
               </div>
               <div className="game-actions">
-                <button type="button" onClick={enterFullscreen}>⛶ Fullscreen</button>
-                <a href="https://tykenn.itch.io/trees-hate-you" target="_blank" rel="noopener">⬇ Windows</a>
+                <button type="button" onClick={enterFullscreen}>⛶</button>
               </div>
             </div>
-            <div className="game-frame-wrap">
+            <div className="game-frame-wrap" ref={gameWrapRef}>
               {/* 替换为游戏 HTML 文件路径：如需更换游戏文件，请修改下面 iframe 的 src */}
               <iframe
                 ref={iframeRef}
@@ -173,6 +192,11 @@ export default function HomePage() {
                   <strong>The trees are waiting...</strong>
                 </div>
               )}
+              {isFullscreen && (
+                <button className="fullscreen-exit" type="button" aria-label="Exit fullscreen" title="Exit fullscreen" onClick={exitFullscreen}>
+                  ×
+                </button>
+              )}
             </div>
           </div>
         </section>
@@ -184,7 +208,7 @@ export default function HomePage() {
               <span>#ComedyGame</span>
               <span>#IndieGem</span>
             </div>
-            <h1>A Walk in the Woods. What Could Go Wrong?</h1>
+            <h2>A Walk in the Woods. What Could Go Wrong?</h2>
             <p>
               A boy finishes a peaceful forest picnic and tries to go home, which is cute, because the trees already voted against him. In Trees Hate You, trunks shoot, branches punch, traps pretend to be friendly, and every safe path is merely a setup with better timing. It is a compact trial-and-death rage-comedy game where learning the pattern only makes the next betrayal feel more personal. The internet calls it the Dark Souls of picnics. The picnic did not ask for this.
             </p>
@@ -295,29 +319,16 @@ export default function HomePage() {
           </div>
         </section>
 
-        <section className="steam-banner reveal">
-          <div>
-            <h2>🎮 Full Game Coming to Steam in 2026</h2>
-            <p>More biomes. More traps. More suffering.</p>
-          </div>
-          <div className="banner-actions">
-            <a href="https://store.steampowered.com/app/4171850/Trees_Hate_You" target="_blank" rel="noopener">☆ Wishlist on Steam</a>
-            <a href="https://tykenn.itch.io/trees-hate-you" target="_blank" rel="noopener">▶ Play Demo on itch.io</a>
-          </div>
-        </section>
       </main>
 
       <footer className="site-footer">
-        <p>© 2025 treeshateyou.help - Fan site, not affiliated with Tykenn</p>
+        <p>© 2026 treeshateyou.help</p>
         <nav aria-label="Footer navigation">
           <a href="#play">Play</a>
           <a href="#about">About</a>
           <a href="#how-to-play">How to Play</a>
           <a href="#rate">Rate It</a>
         </nav>
-        <p>
-          Game by Tykenn <a href="https://tykenn.itch.io/trees-hate-you" target="_blank" rel="noopener">itch.io</a> <a href="https://store.steampowered.com/app/4171850/Trees_Hate_You" target="_blank" rel="noopener">Steam</a>
-        </p>
       </footer>
     </>
   );

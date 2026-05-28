@@ -1,0 +1,17 @@
+{
+  "name": "Trees Hate You",
+  "short_name": "Trees Hate You",
+  "description": "Play Trees Hate You online free, the viral rage-comedy tree trap game.",
+  "start_url": "/",
+  "display": "standalone",
+  "background_color": "#fbfcf7",
+  "theme_color": "#1a2e1a",
+  "icons": [
+    {
+      "src": "/favicon.svg",
+      "sizes": "any",
+      "type": "image/svg+xml",
+      "purpose": "any maskable"
+    }
+  ]
+}

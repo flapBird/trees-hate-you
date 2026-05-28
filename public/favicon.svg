@@ -1,0 +1,7 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" role="img" aria-label="Trees Hate You icon">
+  <rect width="64" height="64" rx="14" fill="#1a2e1a"/>
+  <path d="M32 9 13 38h11l-7 11h12v8h6v-8h12l-7-11h11L32 9Z" fill="#f5c842"/>
+  <path d="M32 16 18 37h10l-6 9h20l-6-9h10L32 16Z" fill="#2f6f3a"/>
+  <path d="M24 34h5m6 0h5" stroke="#0d1a0d" stroke-width="3.5" stroke-linecap="round"/>
+  <path d="M28 42c2.4 1.8 5.6 1.8 8 0" stroke="#c0392b" stroke-width="3" stroke-linecap="round"/>
+</svg>

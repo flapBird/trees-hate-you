@@ -1,6 +1,7 @@
 "use client";
 
 import { FormEvent, useEffect, useMemo, useRef, useState } from "react";
+import AdsterraBanner from "./components/AdsterraBanner";
 
 const ratingMessages: Record<number, string> = {
   1: "The trees win. As always.",
@@ -169,39 +170,44 @@ export default function HomePage() {
 
       <main>
         <section className="hero" id="play" aria-label="Play Trees Hate You">
-          <div className="hero-copy">
-            <h1>Play Trees Hate You Online</h1>
-            <p>Short levels, cruel trees, instant retries. Start the demo, trust nothing, and try not to argue with a forest.</p>
-          </div>
-          <div className="game-panel">
-            <div className="game-bar">
-              <div>
-                <strong>Trees Hate You</strong>
+          <div className="hero-shell">
+            <div className="hero-copy">
+              <h1>Play Trees Hate You Online</h1>
+              <p>Short levels, cruel trees, instant retries. Start the demo, trust nothing, and try not to argue with a forest.</p>
+            </div>
+            <div className="game-panel">
+              <div className="game-bar">
+                <div>
+                  <strong>Trees Hate You</strong>
+                </div>
+                <div className="game-actions">
+                  <button type="button" onClick={enterFullscreen}>⛶</button>
+                </div>
               </div>
-              <div className="game-actions">
-                <button type="button" onClick={enterFullscreen}>⛶</button>
+              <div className="game-frame-wrap" ref={gameWrapRef}>
+                <iframe
+                  ref={iframeRef}
+                  src={gameStarted ? gameUrl : "about:blank"}
+                  title="Trees Hate You playable game"
+                  allow="fullscreen; gamepad"
+                  allowFullScreen
+                />
+                {!gameStarted && (
+                  <button className="game-start" type="button" onClick={startGame} aria-label="Play Trees Hate You">
+                    <img src="/trees-hate-you-cover.jpg" alt="" />
+                    <span className="play-icon">▶</span>
+                    <strong>Play now</strong>
+                  </button>
+                )}
+                {isFullscreen && (
+                  <button className="fullscreen-exit" type="button" aria-label="Exit fullscreen" title="Exit fullscreen" onClick={exitFullscreen}>
+                    ×
+                  </button>
+                )}
               </div>
             </div>
-            <div className="game-frame-wrap" ref={gameWrapRef}>
-              <iframe
-                ref={iframeRef}
-                src={gameStarted ? gameUrl : "about:blank"}
-                title="Trees Hate You playable game"
-                allow="fullscreen; gamepad"
-                allowFullScreen
-              />
-              {!gameStarted && (
-                <button className="game-start" type="button" onClick={startGame} aria-label="Play Trees Hate You">
-                  <img src="/trees-hate-you-cover.jpg" alt="" />
-                  <span className="play-icon">▶</span>
-                  <strong>Play now</strong>
-                </button>
-              )}
-              {isFullscreen && (
-                <button className="fullscreen-exit" type="button" aria-label="Exit fullscreen" title="Exit fullscreen" onClick={exitFullscreen}>
-                  ×
-                </button>
-              )}
+            <div className="hero-ad">
+              <AdsterraBanner />
             </div>
           </div>
         </section>

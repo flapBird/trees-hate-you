@@ -24,7 +24,10 @@ html {
 body {
   margin: 0;
   color: var(--ink);
-  background: var(--bg);
+  background:
+    radial-gradient(circle at 12% 0%, rgba(245, 200, 66, 0.14), transparent 28%),
+    radial-gradient(circle at 88% 6%, rgba(47, 111, 58, 0.12), transparent 30%),
+    var(--bg);
   font-family: Inter, ui-sans-serif, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
   font-size: 16px;
   line-height: 1.6;
@@ -139,11 +142,45 @@ main {
 }
 
 .hero {
+  position: relative;
   display: grid;
   gap: 20px;
+  width: 100%;
+  margin: 0;
+  padding: 34px 14px 44px;
+  overflow: hidden;
+  isolation: isolate;
+}
+
+.hero::before {
+  position: absolute;
+  inset: -72px -30px auto;
+  height: min(78vh, 760px);
+  background:
+    linear-gradient(180deg, rgba(251, 252, 247, 0.16), rgba(251, 252, 247, 0.88)),
+    url("/trees-hate-you-cover.jpg") center / cover;
+  filter: blur(30px) saturate(1.12);
+  transform: scale(1.08);
+  opacity: 0.9;
+  content: "";
+  z-index: -2;
+}
+
+.hero::after {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(251, 252, 247, 0.18), rgba(251, 252, 247, 0.96) 72%),
+    radial-gradient(circle at 50% 18%, rgba(255, 255, 255, 0.28), transparent 42%);
+  content: "";
+  z-index: -1;
+}
+
+.hero-shell {
+  display: grid;
+  gap: 18px;
   width: min(100%, 1120px);
   margin: 0 auto;
-  padding: 34px 14px 44px;
 }
 
 .hero-copy {
@@ -201,10 +238,11 @@ h3 {
 
 .game-panel {
   overflow: hidden;
-  border: 1px solid var(--line);
-  border-radius: 8px;
-  background: var(--paper);
-  box-shadow: var(--shadow);
+  border: 1px solid rgba(255, 255, 255, 0.58);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.76);
+  box-shadow: 0 24px 70px rgba(26, 46, 26, 0.18);
+  backdrop-filter: blur(18px);
   animation: rise-in 0.5s ease both;
 }
 
@@ -215,9 +253,9 @@ h3 {
   gap: 12px;
   min-height: 44px;
   padding: 8px 10px;
-  border-bottom: 1px solid var(--line);
+  border-bottom: 1px solid rgba(226, 234, 217, 0.72);
   color: var(--forest);
-  background: var(--paper);
+  background: rgba(255, 255, 255, 0.8);
 }
 
 .game-bar strong {
@@ -263,7 +301,9 @@ h3 {
 .game-frame-wrap {
   position: relative;
   height: min(100vw, 620px);
-  background: #0b120b;
+  background:
+    radial-gradient(circle at 50% 0%, rgba(245, 200, 66, 0.18), transparent 34%),
+    #0b120b;
 }
 
 .game-frame-wrap iframe {
@@ -293,11 +333,24 @@ h3 {
   padding: 18px;
   border: 0;
   color: #fff;
-  background: linear-gradient(180deg, #eef8e8, #dcefd2);
+  background:
+    linear-gradient(180deg, rgba(238, 248, 232, 0.7), rgba(220, 239, 210, 0.78)),
+    url("/trees-hate-you-cover.jpg") center / cover;
   cursor: pointer;
 }
 
+.game-start::before {
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(180deg, rgba(255, 255, 255, 0.18), rgba(8, 14, 8, 0.18)),
+    rgba(255, 255, 255, 0.1);
+  backdrop-filter: blur(14px);
+  content: "";
+}
+
 .game-start img {
+  position: relative;
   width: min(318px, 72vw, 52vh);
   aspect-ratio: 1;
   border: 1px solid rgba(26, 46, 26, 0.18);
@@ -325,6 +378,7 @@ h3 {
 }
 
 .game-start strong {
+  position: relative;
   color: var(--forest);
   font-size: 1.05rem;
   font-weight: 950;
@@ -352,6 +406,31 @@ h3 {
   font-size: 1.8rem;
   line-height: 1;
   cursor: pointer;
+}
+
+.hero-ad {
+  display: grid;
+  justify-items: center;
+  min-height: 60px;
+}
+
+.adsterra-banner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: min(100%, 468px);
+  min-height: 60px;
+  margin: 0 auto;
+  overflow: hidden;
+  border: 1px solid rgba(255, 255, 255, 0.54);
+  border-radius: 8px;
+  background: rgba(255, 255, 255, 0.64);
+  box-shadow: 0 10px 28px rgba(26, 46, 26, 0.1);
+  backdrop-filter: blur(14px);
+}
+
+.adsterra-banner iframe {
+  max-width: 100%;
 }
 
 .section {

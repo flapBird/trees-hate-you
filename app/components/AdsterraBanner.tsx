@@ -1,38 +1,44 @@
-'use client'; // 💡 必须加在最顶部，声明为客户端组件
+"use client";
 
-import { useEffect, useRef } from 'react';
+import { useEffect, useRef } from "react";
+
+declare global {
+  interface Window {
+    atOptions?: {
+      key: string;
+      format: string;
+      height: number;
+      width: number;
+      params: Record<string, unknown>;
+    };
+  }
+}
 
 export default function AdsterraBanner() {
   const bannerRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    // 确保只在客户端执行，且只加载一次广告
-    if (bannerRef.current && !bannerRef.current.querySelector('iframe')) {
-      const div = bannerRef.current;
-
-      // 1. 在 window 对象上挂载配置
-      (window as any).atOptions = {
-        'key': '1362380e0bd383a3424b76882e4c199e',
-        'format': 'iframe',
-        'height': 60,
-        'width': 468,
-        'params': {}
-      };
-
-      // 2. 动态创建并插入广告的 JS 脚本
-      const script = document.createElement('script');
-      script.type = 'text/javascript';
-      script.src = 'https://highperformanceformat.com';
-      
-      div.appendChild(script);
+    if (!bannerRef.current || bannerRef.current.dataset.loaded === "true") {
+      return;
     }
+
+    bannerRef.current.dataset.loaded = "true";
+    window.atOptions = {
+      key: "1362380e0bd383a3424b76882e4c199e",
+      format: "iframe",
+      height: 60,
+      width: 468,
+      params: {}
+    };
+
+    const script = document.createElement("script");
+    script.type = "text/javascript";
+    script.src = "https://www.highperformanceformat.com/1362380e0bd383a3424b76882e4c199e/invoke.js";
+    script.async = true;
+    bannerRef.current.appendChild(script);
   }, []);
 
   return (
-    // 居中容器，并将广告脚本注入到该容器内
-    <div 
-      ref={bannerRef} 
-      style={{ display: 'flex', justifyContent: 'center', margin: '16px 0', minHeight: '60px' }} 
-    />
+    <div className="adsterra-banner" ref={bannerRef} aria-label="Advertisement" />
   );
 }

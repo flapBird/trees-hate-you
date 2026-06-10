@@ -1,6 +1,7 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
 import NativeBannerAd from "./components/NativeBannerAd";
+import AdsterraBanner from "./components/AdsterraBanner";
 import "./globals.css";
 
 export const viewport: Viewport = {
@@ -90,7 +91,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
             {children}
           </div>
           <aside className="ad-sidebar ad-sidebar-right" aria-label="Right sidebar advertisement">
-            <NativeBannerAd />
+            <AdsterraBanner />
           </aside>
         </div>
       </body>

@@ -2,31 +2,33 @@
 
 import { useEffect, useRef } from "react";
 
-export default function NativeBannerAd() {
-  return (
-    <div className="native-banner-ad" aria-label="Advertisement">
-      <NativeBannerAdInner />
-    </div>
-  );
-}
+const AD_SCRIPT_SRC =
+  "https://pl29635721.effectivecpmnetwork.com/f193185e4c4ba7699185eef77932cfa9/invoke.js";
+const AD_CONTAINER_ID = "container-f193185e4c4ba7699185eef77932cfa9";
 
-function NativeBannerAdInner() {
-  const containerRef = useRef<HTMLDivElement>(null);
+export default function NativeBannerAd() {
+  const wrapperRef = useRef<HTMLDivElement>(null);
 
   useEffect(() => {
-    const container = containerRef.current;
-    if (!container || container.dataset.loaded === "true") return;
-    container.dataset.loaded = "true";
+    const wrapper = wrapperRef.current;
+    if (!wrapper || wrapper.dataset.loaded === "true") return;
+    wrapper.dataset.loaded = "true";
 
     const script = document.createElement("script");
     script.async = true;
     script.setAttribute("data-cfasync", "false");
-    script.src =
-      "https://pl29635721.effectivecpmnetwork.com/f193185e4c4ba7699185eef77932cfa9/invoke.js";
-    container.appendChild(script);
+    script.src = AD_SCRIPT_SRC;
+
+    // Insert script before the container div, same as user's raw HTML
+    const container = wrapper.querySelector(`#${CSS.escape(AD_CONTAINER_ID)}`);
+    if (container?.parentNode) {
+      container.parentNode.insertBefore(script, container);
+    }
   }, []);
 
   return (
-    <div ref={containerRef} aria-label="Advertisement" />
+    <div className="native-banner-ad" ref={wrapperRef} aria-label="Advertisement">
+      <div id={AD_CONTAINER_ID} />
+    </div>
   );
 }

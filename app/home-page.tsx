@@ -159,8 +159,8 @@ export default function HomePage() {
             <span />
           </button>
           <div className={menuOpen ? "nav-links open" : "nav-links"}>
-            {["Play", "About", "How to Play", "Rate It"].map((item) => (
-              <a key={item} href={`#${item === "How to Play" ? "how-to-play" : item === "Rate It" ? "rate" : item.toLowerCase()}`} onClick={() => setMenuOpen(false)}>
+            {["Play", "About", "How to Play", "Privacy", "Contact"].map((item) => (
+              <a key={item} href={item === "Play" ? "#play" : item === "How to Play" ? "#how-to-play" : "/" + item.toLowerCase()} onClick={() => setMenuOpen(false)}>
                 {item}
               </a>
             ))}
@@ -205,9 +205,6 @@ export default function HomePage() {
                   </button>
                 )}
               </div>
-            </div>
-            <div className="hero-ad">
-              <AdsterraBanner />
             </div>
           </div>
         </section>
@@ -335,10 +332,11 @@ export default function HomePage() {
       <footer className="site-footer">
         <p>© 2026 treeshateyou.help</p>
         <nav aria-label="Footer navigation">
-          <a href="#play">Play</a>
-          <a href="#about">About</a>
-          <a href="#how-to-play">How to Play</a>
-          <a href="#rate">Rate It</a>
+          <a href="/#play">Play</a>
+          <a href="/about">About</a>
+          <a href="/#how-to-play">How to Play</a>
+          <a href="/privacy">Privacy</a>
+          <a href="/contact">Contact</a>
         </nav>
       </footer>
     </>

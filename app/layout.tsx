@@ -1,5 +1,6 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
+import NativeBannerAd from "./components/NativeBannerAd";
 import "./globals.css";
 
 export const viewport: Viewport = {
@@ -16,9 +17,13 @@ export const metadata: Metadata = {
     canonical: "https://treeshateyou.help"
   },
   icons: {
-    icon: [{ url: "/favicon.svg", type: "image/svg+xml" }],
-    shortcut: "/favicon.svg",
-    apple: [{ url: "/favicon.svg", type: "image/svg+xml" }]
+    icon: [
+      { url: "/favicon-32.png", type: "image/png", sizes: "32x32" },
+      { url: "/favicon.svg", type: "image/svg+xml" }
+    ],
+    shortcut: "/favicon-32.png",
+    apple: [{ url: "/favicon-192.png", type: "image/png", sizes: "192x192" }],
+    other: [{ rel: "icon", url: "/favicon-192.png", sizes: "192x192" }]
   },
   manifest: "/site.webmanifest",
   openGraph: {
@@ -77,7 +82,17 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        {children}
+        <div className="page-layout">
+          <aside className="ad-sidebar ad-sidebar-left" aria-label="Left sidebar advertisement">
+            <NativeBannerAd />
+          </aside>
+          <div className="page-inner">
+            {children}
+          </div>
+          <aside className="ad-sidebar ad-sidebar-right" aria-label="Right sidebar advertisement">
+            <NativeBannerAd />
+          </aside>
+        </div>
       </body>
     </html>
   );

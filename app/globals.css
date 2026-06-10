@@ -148,13 +148,24 @@ main {
   width: 100%;
   margin: 0;
   padding: 34px 14px 44px;
+}
+
+
+
+
+
+.hero-shell {
+  position: relative;
+  display: grid;
+  gap: 18px;
+  width: min(100%, 1120px);
+  margin: 0 auto;
   overflow: hidden;
   isolation: isolate;
 }
-
-.hero::before {
+.hero-shell::before {
   position: absolute;
-  inset: -72px -30px auto;
+  inset: -72px 0 auto;
   height: min(78vh, 760px);
   background:
     linear-gradient(180deg, rgba(251, 252, 247, 0.16), rgba(251, 252, 247, 0.88)),
@@ -165,8 +176,7 @@ main {
   content: "";
   z-index: -2;
 }
-
-.hero::after {
+.hero-shell::after {
   position: absolute;
   inset: 0;
   background:
@@ -176,18 +186,6 @@ main {
   z-index: -1;
 }
 
-.hero-shell {
-  display: grid;
-  gap: 18px;
-  width: min(100%, 1120px);
-  margin: 0 auto;
-}
-
-.hero-copy {
-  display: grid;
-  gap: 10px;
-  text-align: center;
-}
 
 .kicker {
   margin: 0;
@@ -215,8 +213,7 @@ h2 {
 }
 
 h1 {
-  margin-bottom: 0;
-  font-size: 2.45rem;
+  font-size: 1.55rem;
 }
 
 h2 {
@@ -229,8 +226,18 @@ h3 {
   font-size: 1.04rem;
 }
 
-.hero-copy p:last-child {
-  max-width: 660px;
+.hero-copy {
+  display: grid;
+  gap: 10px;
+  text-align: center;
+  padding: 28px 20px;
+  border: 1px solid rgba(255, 255, 255, 0.58);
+  border-radius: 14px;
+  background: rgba(255, 255, 255, 0.76);
+  box-shadow: 0 24px 70px rgba(26, 46, 26, 0.18);
+  backdrop-filter: blur(18px);
+}
+.hero-copy p {
   margin: 0 auto;
   color: var(--muted);
   font-weight: 700;
@@ -821,7 +828,7 @@ h3 {
   }
 
   h1 {
-    font-size: 3.35rem;
+    font-size: 1.85rem;
   }
 
   h2 {
@@ -865,7 +872,7 @@ h3 {
   }
 
   h1 {
-    font-size: 4rem;
+    font-size: 2rem;
   }
 
   .section {
@@ -887,5 +894,54 @@ h3 {
   .reveal {
     opacity: 1;
     transform: none;
+  }
+}
+
+/* --- Page layout with side ads --- */
+.page-layout {
+  display: flex;
+  justify-content: center;
+  width: 100%;
+  min-height: 100vh;
+}
+
+.page-inner {
+  flex: 1;
+  min-width: 0;
+  max-width: 1120px;
+}
+
+.ad-sidebar {
+  display: none;
+  flex-shrink: 0;
+  width: 160px;
+  padding: calc(var(--header-h) + 20px) 8px 20px;
+  position: relative;
+}
+
+.native-banner-ad {
+  position: sticky;
+  top: calc(var(--header-h) + 14px);
+  min-height: 300px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: center;
+}
+
+@media (min-width: 1400px) {
+  .ad-sidebar {
+    display: block;
+  }
+
+  .page-inner {
+    max-width: 880px;
+  }
+}
+
+@media (min-width: 1600px) {
+  .ad-sidebar {
+    width: 180px;
+    padding-left: 10px;
+    padding-right: 10px;
   }
 }

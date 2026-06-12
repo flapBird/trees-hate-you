@@ -73,6 +73,19 @@ export default function AboutPage() {
               on itch.io, and a full Steam release is planned for 2026 with additional levels,
               new tree types, and more creative ways to perish in a forest.
             </p>
+            <p>
+              For press inquiries, collaboration opportunities, or just to chat about game dev,
+              you can{" "}
+              <a
+                href="https://cal.com/lees-wal-c7qaqq"
+                target="_blank"
+                rel="noopener"
+                style={{ color: "var(--leaf)", fontWeight: 850, textDecoration: "underline" }}
+              >
+                book a call with the developer
+              </a>{" "}
+              directly.
+            </p>
 
             <h2>Game Features</h2>
             <ul style={{ color: "var(--muted)", lineHeight: "1.8", paddingLeft: "1.2em" }}>

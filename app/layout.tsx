@@ -1,7 +1,5 @@
 import type { Metadata, Viewport } from "next";
 import Script from "next/script";
-import NativeBannerAd from "./components/NativeBannerAd";
-import AdsterraBanner from "./components/AdsterraBanner";
 import "./globals.css";
 
 export const viewport: Viewport = {
@@ -83,17 +81,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           type="application/ld+json"
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
-        <div className="page-layout">
-          <aside className="ad-sidebar ad-sidebar-left" aria-label="Left sidebar advertisement">
-            <NativeBannerAd />
-          </aside>
-          <div className="page-inner">
-            {children}
-          </div>
-          <aside className="ad-sidebar ad-sidebar-right" aria-label="Right sidebar advertisement">
-            <AdsterraBanner />
-          </aside>
-        </div>
+        {children}
       </body>
     </html>
   );

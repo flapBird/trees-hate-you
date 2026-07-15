@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import SiteFooter from "../components/SiteFooter";
+import SiteHeader from "../components/SiteHeader";
 
 export const metadata: Metadata = {
   title: "Privacy Policy — Trees Hate You",
@@ -17,21 +19,9 @@ export const metadata: Metadata = {
 export default function PrivacyPage() {
   return (
     <>
-      <header className="site-header">
-        <nav className="nav-wrap" aria-label="Primary navigation">
-          <a className="logo" href="/">🌲 TREES HATE YOU</a>
-          <div className="nav-links" style={{ position: "static", display: "flex", padding: 0, border: 0, background: "transparent", boxShadow: "none", transform: "none" }}>
-            <a href="/#play">Play</a>
-            <a href="/about">About</a>
-            <a href="/#how-to-play">How to Play</a>
-            <a href="/privacy">Privacy</a>
-            <a href="/contact">Contact</a>
-          </div>
-        </nav>
-      </header>
-
-      <main>
-        <section className="section" aria-label="Privacy Policy">
+      <SiteHeader />
+      <main className="legal-main">
+        <section className="legal-sheet" aria-label="Privacy Policy">
           <h1>Privacy Policy</h1>
           <p style={{ color: "var(--muted)", marginBottom: "8px" }}>
             Last updated: June 11, 2026
@@ -153,16 +143,7 @@ export default function PrivacyPage() {
         </section>
       </main>
 
-      <footer className="site-footer">
-        <p>© 2026 treeshateyou.help</p>
-        <nav aria-label="Footer navigation">
-          <a href="/#play">Play</a>
-          <a href="/about">About</a>
-          <a href="/#how-to-play">How to Play</a>
-          <a href="/privacy">Privacy</a>
-          <a href="/contact">Contact</a>
-        </nav>
-      </footer>
+      <SiteFooter />
     </>
   );
 }

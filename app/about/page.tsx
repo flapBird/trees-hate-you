@@ -1,4 +1,6 @@
 import type { Metadata } from "next";
+import SiteFooter from "../components/SiteFooter";
+import SiteHeader from "../components/SiteHeader";
 
 export const metadata: Metadata = {
   title: "About Trees Hate You — The Viral Tree Rage Game by Tykenn",
@@ -18,21 +20,9 @@ export const metadata: Metadata = {
 export default function AboutPage() {
   return (
     <>
-      <header className="site-header">
-        <nav className="nav-wrap" aria-label="Primary navigation">
-          <a className="logo" href="/">🌲 TREES HATE YOU</a>
-          <div className="nav-links" style={{ position: "static", display: "flex", padding: 0, border: 0, background: "transparent", boxShadow: "none", transform: "none" }}>
-            <a href="/#play">Play</a>
-            <a href="/about">About</a>
-            <a href="/#how-to-play">How to Play</a>
-            <a href="/privacy">Privacy</a>
-            <a href="/contact">Contact</a>
-          </div>
-        </nav>
-      </header>
-
-      <main>
-        <section className="section" aria-label="About Trees Hate You">
+      <SiteHeader />
+      <main className="legal-main">
+        <section className="legal-sheet" aria-label="About Trees Hate You">
           <div className="tags">
             <span>#RageBait</span>
             <span>#ComedyGame</span>
@@ -66,25 +56,17 @@ export default function AboutPage() {
               and "the reason I will never look at oak trees the same way again."
             </p>
 
-            <h2>About the Developer</h2>
+            <h2>About This Site</h2>
             <p>
-              Trees Hate You is created by <strong>Tykenn</strong>, an indie game developer who
-              understands that the best comedy comes from shared suffering. The demo is available
-              on itch.io, and a full Steam release is planned for 2026 with additional levels,
-              new tree types, and more creative ways to perish in a forest.
+              This is an independent fan-made play and information hub. It is built to make the
+              game easy to find, easy to try, and a little easier to understand before the forest
+              starts winning.
             </p>
             <p>
-              For press inquiries, collaboration opportunities, or just to chat about game dev,
-              you can{" "}
-              <a
-                href="https://cal.com/lees-wal-c7qaqq"
-                target="_blank"
-                rel="noopener"
-                style={{ color: "var(--leaf)", fontWeight: 850, textDecoration: "underline" }}
-              >
-                book a call with the developer
-              </a>{" "}
-              directly.
+              Trees Hate You is created by <strong>Tykenn</strong>. The demo is available on
+              itch.io, and a full Steam release is planned for 2026 with additional levels, new
+              tree types, and more creative ways to perish in a forest. This site is not
+              affiliated with Tykenn or the game&apos;s publisher.
             </p>
 
             <h2>Game Features</h2>
@@ -104,16 +86,7 @@ export default function AboutPage() {
         </section>
       </main>
 
-      <footer className="site-footer">
-        <p>© 2026 treeshateyou.help</p>
-        <nav aria-label="Footer navigation">
-          <a href="/#play">Play</a>
-          <a href="/about">About</a>
-          <a href="/#how-to-play">How to Play</a>
-          <a href="/privacy">Privacy</a>
-          <a href="/contact">Contact</a>
-        </nav>
-      </footer>
+      <SiteFooter />
     </>
   );
 }

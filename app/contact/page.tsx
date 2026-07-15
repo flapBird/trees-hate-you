@@ -2,6 +2,8 @@
 
 import type { Metadata } from "next";
 import { FormEvent, useState } from "react";
+import SiteFooter from "../components/SiteFooter";
+import SiteHeader from "../components/SiteHeader";
 
 export default function ContactPage() {
   const [formState, setFormState] = useState<"idle" | "submitting" | "success" | "error">("idle");
@@ -44,27 +46,15 @@ export default function ContactPage() {
 
   return (
     <>
-      <header className="site-header">
-        <nav className="nav-wrap" aria-label="Primary navigation">
-          <a className="logo" href="/">🌲 TREES HATE YOU</a>
-          <div className="nav-links" style={{ position: "static", display: "flex", padding: 0, border: 0, background: "transparent", boxShadow: "none", transform: "none" }}>
-            <a href="/#play">Play</a>
-            <a href="/about">About</a>
-            <a href="/#how-to-play">How to Play</a>
-            <a href="/privacy">Privacy</a>
-            <a href="/contact">Contact</a>
-          </div>
-        </nav>
-      </header>
-
-      <main>
-        <section className="section" aria-label="Contact Us">
+      <SiteHeader />
+      <main className="legal-main">
+        <section className="legal-sheet" aria-label="Contact Us">
           <h1>Contact Us</h1>
 
           <div className="story" style={{ maxWidth: "680px" }}>
             <p>
               Got questions, feedback, or a particularly creative way the trees murdered you?
-              We&apos;d love to hear it. Use the form below to reach the developer behind Trees Hate You.
+              We&apos;d love to hear it. Use the form below to reach the team behind this fan site.
             </p>
 
             <h2>Send a Message</h2>
@@ -100,7 +90,8 @@ export default function ContactPage() {
             </p>
             <p>
               For press inquiries, collaboration requests, or business matters, use the contact
-              form above and we&apos;ll route your message accordingly.
+              form above and we&apos;ll reply when we can. For official game news, please follow the
+              developer&apos;s channels directly.
             </p>
 
             <p className="credit">
@@ -110,16 +101,7 @@ export default function ContactPage() {
         </section>
       </main>
 
-      <footer className="site-footer">
-        <p>© 2026 treeshateyou.help</p>
-        <nav aria-label="Footer navigation">
-          <a href="/#play">Play</a>
-          <a href="/about">About</a>
-          <a href="/#how-to-play">How to Play</a>
-          <a href="/privacy">Privacy</a>
-          <a href="/contact">Contact</a>
-        </nav>
-      </footer>
+      <SiteFooter />
     </>
   );
 }

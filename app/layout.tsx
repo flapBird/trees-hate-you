@@ -8,7 +8,7 @@ export const viewport: Viewport = {
 
 export const metadata: Metadata = {
   metadataBase: new URL("https://treeshateyou.help"),
-  title: "Trees Hate You - Play the Viral Tree Rage Game Online Free",
+  title: "Trees Hate You | Play the Viral Tree Rage Game Online",
   description:
     "Play Trees Hate You online free, the viral rage-comedy trap game where hostile trees shoot, punch, and trick you through the world's worst forest walk.",
   keywords: ["trees hate you", "tree rage game", "rage bait game", "play online free", "indie game", "comedy game"],

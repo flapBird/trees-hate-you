@@ -180,6 +180,20 @@ h3 { margin-bottom: 8px; color: var(--forest); font-size: 1.04rem; }
 .guide-grid p { margin-bottom: 0; color: var(--muted); font-size: 0.94rem; font-weight: 600; }
 .guide-number { display: block; margin-bottom: 34px; color: var(--leaf); font-size: 0.78rem; font-weight: 950; }
 
+.playbook-section { padding: 78px 0; background: #f5f8f1; }
+.playbook-grid { display: grid; gap: 12px; }
+.playbook-grid article { padding: 22px; border: 1px solid var(--line); border-radius: 7px; background: var(--paper); }
+.playbook-grid article::before { display: block; width: 26px; height: 3px; margin-bottom: 22px; background: var(--sun); content: ""; }
+.playbook-grid p { margin-bottom: 0; color: var(--muted); font-size: 0.94rem; font-weight: 600; }
+
+.audience-section { padding: 78px 0; color: #ebf3e6; background: #102617; }
+.audience-section h2 { color: white; }
+.audience-section .eyebrow { color: var(--moss); }
+.audience-grid { display: grid; gap: 28px; }
+.audience-grid article p:not(.eyebrow) { max-width: 690px; color: #c5d5c1; font-weight: 600; }
+.audience-note { align-self: start; padding: 20px; border-left: 3px solid var(--sun); background: rgba(255, 255, 255, 0.06); }
+.audience-note strong { color: var(--sun); }.audience-note p { margin: 8px 0 0; color: #d7e4d3; font-size: 0.94rem; font-weight: 600; }
+
 .faq-section { padding: 78px 0; background: var(--paper); }
 .faq-grid { display: grid; gap: 28px; }
 .faq-list { border-top: 1px solid var(--line); }
@@ -225,7 +239,7 @@ h3 { margin-bottom: 8px; color: var(--forest); font-size: 1.04rem; }
 @media (min-width: 768px) {
   .nav-wrap { padding: 0 26px; }.menu-toggle { display: none; }.nav-links { position: static; display: flex; align-items: center; gap: 4px; padding: 0; border: 0; background: transparent; box-shadow: none; opacity: 1; pointer-events: auto; transform: none; }.nav-links a { padding: 8px 10px; }.nav-links .nav-play { margin-left: 6px; padding: 8px 12px; border-radius: 6px; }
   .game-hero { padding: 78px 24px 64px; }.game-hero-inner { grid-template-columns: minmax(0, 0.72fr) minmax(520px, 1.28fr); align-items: center; gap: 36px; }.hero-intro { margin: 0; }.game-surface { grid-column: 2; grid-row: 1 / span 2; }.ad-slot { grid-column: 1; grid-row: 2; justify-items: start; align-self: end; padding-top: 20px; }.adsterra-banner { margin: 0; }.game-frame-wrap { height: min(66vh, 670px); }.play-button { bottom: 9%; }
-  h1 { font-size: 3.55rem; }.overview-section, .guide-section, .faq-section, .feedback-section { padding: 96px 0; }.overview-grid { grid-template-columns: minmax(0, 1.3fr) minmax(290px, 0.7fr); align-items: start; }.quick-facts { margin-top: 6px; }.guide-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }.faq-grid { grid-template-columns: minmax(250px, 0.72fr) minmax(0, 1.28fr); }.feedback-grid { grid-template-columns: minmax(0, 0.85fr) minmax(400px, 1.15fr); align-items: start; }.review-strip { grid-template-columns: repeat(3, minmax(0, 1fr)); }.footer-inner { grid-template-columns: minmax(0, 1fr) auto; align-items: start; }.footer-links { max-width: 360px; justify-content: flex-end; }.legal-sheet { padding: 46px; }
+  h1 { font-size: 3.55rem; }.overview-section, .guide-section, .playbook-section, .audience-section, .faq-section, .feedback-section { padding: 96px 0; }.overview-grid { grid-template-columns: minmax(0, 1.3fr) minmax(290px, 0.7fr); align-items: start; }.quick-facts { margin-top: 6px; }.guide-grid, .playbook-grid { grid-template-columns: repeat(3, minmax(0, 1fr)); }.audience-grid { grid-template-columns: minmax(0, 1.35fr) minmax(280px, 0.65fr); align-items: start; }.faq-grid { grid-template-columns: minmax(250px, 0.72fr) minmax(0, 1.28fr); }.feedback-grid { grid-template-columns: minmax(0, 0.85fr) minmax(400px, 1.15fr); align-items: start; }.review-strip { grid-template-columns: repeat(3, minmax(0, 1fr)); }.footer-inner { grid-template-columns: minmax(0, 1fr) auto; align-items: start; }.footer-links { max-width: 360px; justify-content: flex-end; }.legal-sheet { padding: 46px; }
 }
 
 @media (min-width: 1200px) { .game-hero { padding-top: 96px; }.game-hero-inner { gap: 52px; }.content-wrap { padding-right: 0; padding-left: 0; } }

@@ -4,9 +4,10 @@
   "private": true,
   "scripts": {
     "dev": "next dev",
-    "build": "next build",
+    "build": "npm run presitemap && next build",
     "start": "next start",
-    "lint": "next lint"
+    "lint": "next lint",
+    "presitemap": "node scripts/generate-sitemap.mjs"
   },
   "dependencies": {
     "next": "^15.3.0",

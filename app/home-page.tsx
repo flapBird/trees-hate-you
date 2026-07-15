@@ -150,13 +150,13 @@ export default function HomePage() {
           <div className="content-wrap">
             <div className="section-heading">
               <p className="eyebrow">Game guide</p>
-              <h2>How to play Trees Hate You without trusting the forest.</h2>
+              <h2>How to play Trees Hate You.</h2>
               <p>There is no elegant route through the woods. There is only pattern recognition, timing, and the willingness to be embarrassed several times in a row. The goal is not to play perfectly on a first attempt. The goal is to turn each ridiculous death into useful information for the next run.</p>
             </div>
             <div className="guide-grid">
-              <article><span className="guide-number">01</span><h3>Trees Hate You movement: slow down first</h3><p>Use WASD or the arrow keys. The game rewards attention more than speed, at least until it decides not to. Before you commit to a jump or a long sprint, look at what changed around you: a branch that moved, a platform placed too neatly, or an empty gap that feels unusually generous. The safest first input is often a tiny one.</p></article>
-              <article><span className="guide-number">02</span><h3>Trees Hate You traps: study the betrayal</h3><p>Each death is a clue. Watch where the hit came from, reset, and assume the next obvious answer is wrong too. Some traps are about timing, while others exist to punish the exact behavior that worked ten seconds earlier. Remember the trigger, not just the location. A tree that did nothing on the first pass may be waiting for your return.</p></article>
-              <article><span className="guide-number">03</span><h3>Trees Hate You retries: use the fresh memory</h3><p>Respawns are quick. Keep the run moving, take the joke, and use the last failure to buy one extra second. Do not pause so long that the sequence disappears from your head. A good retry is a small experiment: move earlier, wait longer, jump shorter, or deliberately test the suspicious object. Progress usually comes from one changed decision, not a completely new plan.</p></article>
+              <article><span className="guide-number">01</span><h3>Movement: slow down first</h3><p>Use WASD or the arrow keys. The game rewards attention more than speed, at least until it decides not to. Before you commit to a jump or a long sprint, look at what changed around you: a branch that moved, a platform placed too neatly, or an empty gap that feels unusually generous. The safest first input is often a tiny one.</p></article>
+              <article><span className="guide-number">02</span><h3>Traps: study the betrayal</h3><p>Each death is a clue. Watch where the hit came from, reset, and assume the next obvious answer is wrong too. Some traps are about timing, while others exist to punish the exact behavior that worked ten seconds earlier. Remember the trigger, not just the location. A tree that did nothing on the first pass may be waiting for your return.</p></article>
+              <article><span className="guide-number">03</span><h3>Retries: use the fresh memory</h3><p>Respawns are quick. Keep the run moving, take the joke, and use the last failure to buy one extra second. Do not pause so long that the sequence disappears from your head. A good retry is a small experiment: move earlier, wait longer, jump shorter, or deliberately test the suspicious object. Progress usually comes from one changed decision, not a completely new plan.</p></article>
             </div>
           </div>
         </section>
@@ -165,20 +165,20 @@ export default function HomePage() {
           <div className="content-wrap">
             <div className="section-heading">
               <p className="eyebrow">First-run playbook</p>
-              <h2>Trees Hate You tips for your first twenty minutes.</h2>
+              <h2>Tips for your first twenty minutes.</h2>
               <p>Most early frustration comes from treating Trees Hate You like a normal platformer. It is more useful to think of each room as a tiny puzzle with a sense of humor. The environment is part of the enemy roster.</p>
             </div>
             <div className="playbook-grid">
               <article>
-                <h3>Trees Hate You: spot the too-obvious route</h3>
+                <h3>spot the too-obvious route</h3>
                 <p>When a route seems perfectly clean, stop for a moment. The game likes to frame an easy answer so that you commit to it at full speed. Check the edges of platforms, the ceiling above a landing zone, and the space behind objects before you trust a clear path. You do not need to be paranoid about every pixel, but you should be skeptical of convenience.</p>
               </article>
               <article>
-                <h3>Trees Hate You: keep your hands relaxed</h3>
+                <h3>keep your hands relaxed</h3>
                 <p>Rage games become much harder when every death makes you hold a key longer or mash through the next section. Trees Hate You is at its funniest when you let it surprise you, reset, and return with one small adjustment. If a trap catches you twice, take a second to identify the trigger instead of trying to overpower it with speed.</p>
               </article>
               <article>
-                <h3>Trees Hate You: play with the sound on</h3>
+                <h3>play with the sound on</h3>
                 <p>Visual cues matter most, but game sound can help you notice an incoming interaction or mark the timing of a previous failure. More importantly, the sound design helps sell the absurdity. This is a game built around tension breaking in an instant, and hearing the impact makes the lesson stick a little better.</p>
               </article>
             </div>
@@ -204,7 +204,7 @@ export default function HomePage() {
           <div className="content-wrap faq-grid">
             <div className="section-heading">
               <p className="eyebrow">FAQ</p>
-              <h2>Trees Hate You FAQ: questions the forest refuses to answer.</h2>
+              <h2>Frequently Asked Question</h2>
             </div>
             <div className="faq-list">
               <details open><summary>Can I play Trees Hate You for free?</summary><p>Yes. The web demo is free to start from the game panel at the top of this page. Click Play the demo, wait for the game frame to load, and use a keyboard for the smoothest controls. No account is required for the basic web experience.</p></details>

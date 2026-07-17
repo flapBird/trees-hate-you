@@ -22,11 +22,6 @@ export default function AboutPage() {
       <SiteHeader />
       <main className="legal-main">
         <section className="legal-sheet" aria-label="About Trees Hate You">
-          <div className="tags">
-            <span>#RageBait</span>
-            <span>#ComedyGame</span>
-            <span>#IndieGem</span>
-          </div>
           <h1>About Trees Hate You</h1>
 
           <div className="story">

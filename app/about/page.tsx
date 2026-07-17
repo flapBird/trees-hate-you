@@ -6,7 +6,6 @@ export const metadata: Metadata = {
   title: "About Trees Hate You — The Viral Tree Rage Game by Tykenn",
   description:
     "Learn about Trees Hate You, the viral indie rage-comedy trap game where hostile trees shoot, punch, and troll players through the world's worst forest walk. Made by Tykenn.",
-  keywords: ["about trees hate you", "trees hate you game info", "tykenn indie game", "tree rage game about", "rage comedy game"],
   alternates: {
     canonical: "https://treeshateyou.help/about"
   },

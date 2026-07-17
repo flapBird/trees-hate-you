@@ -3,7 +3,7 @@
 import { useState } from "react";
 
 const links = [
-  { href: "/#play", label: "Play" },
+  { href: "/", label: "Play" },
   { href: "/#guide", label: "Guide" },
   { href: "/#faq", label: "FAQ" },
   { href: "/about", label: "About" }
@@ -15,7 +15,7 @@ export default function SiteHeader() {
   return (
     <header className="site-header">
       <nav className="nav-wrap" aria-label="Primary navigation">
-        <a className="brand" href="/#play" onClick={() => setOpen(false)}>
+        <a className="brand" href="/" onClick={() => setOpen(false)}>
           <span className="brand-mark" aria-hidden="true">THY</span>
           <span>Trees Hate You</span>
         </a>
@@ -34,7 +34,7 @@ export default function SiteHeader() {
               {link.label}
             </a>
           ))}
-          <a className="nav-play" href="/#play" onClick={() => setOpen(false)}>Play now</a>
+          <a className="nav-play" href="/" onClick={() => setOpen(false)}>Play now</a>
         </div>
       </nav>
     </header>

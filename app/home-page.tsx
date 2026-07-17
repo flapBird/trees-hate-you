@@ -15,11 +15,6 @@ const ratingMessages: Record<number, string> = {
   5: "Legend. The trees fear you now."
 };
 
-const reviews = [
-  { name: "BarkVictim", initial: "B", tone: "red", stars: 5, time: "2 days ago", text: "I got shot by a bonsai. Five stars." },
-  { name: "NatureIsOver", initial: "N", tone: "green", stars: 5, time: "1 week ago", text: "This game gave me trust issues with nature." },
-  { name: "RetryRon", initial: "R", tone: "yellow", stars: 4, time: "3 weeks ago", text: "My therapist says I need to stop. One more run." }
-];
 
 export default function HomePage() {
   const gameWrapRef = useRef<HTMLDivElement>(null);
@@ -250,14 +245,6 @@ export default function HomePage() {
               <button className="submit-review" type="submit" disabled={formState === "submitting"}>{formState === "submitting" ? "Submitting..." : "Submit review"}</button>
               <p className={`form-message ${formState}`}>{formMessage}</p>
             </form>
-          </div>
-          <div className="content-wrap review-strip" aria-label="Recent player reviews">
-            {reviews.map((review) => (
-              <article className="player-review" key={review.name}>
-                <div className={`avatar ${review.tone}`}>{review.initial}</div>
-                <div><div className="review-head"><strong>{review.name}</strong><time>{review.time}</time></div><div className="review-stars">{"★".repeat(review.stars)}{"☆".repeat(5 - review.stars)}</div><p>{review.text}</p></div>
-              </article>
-            ))}
           </div>
         </section>
       </main>

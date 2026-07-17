@@ -4,7 +4,7 @@ import SiteHeader from "../components/SiteHeader";
 
 export const metadata: Metadata = {
   title: "Terms & Conditions | Trees Hate You",
-  description: "Terms and conditions for using treeshateyou.help.",
+  description: "Terms and conditions for using treeshateyou.help — covering site usage, third-party game content, user feedback guidelines, and service availability.",
   alternates: { canonical: "https://treeshateyou.help/terms" }
 };
 

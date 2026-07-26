@@ -63,21 +63,7 @@ public/
 └── sitemap.xml                 # Generated at build time
 ```
 
-### Design decisions
-
-**Server vs. client components.** The root `layout.tsx` and most legal pages are server components for fast static generation. The home page and contact form use `"use client"` because they need interactivity: game iframe handling, fullscreen API, star-rating hover state, and form submission.
-
-**Ad rendering.** Two advertising slots appear as sticky sidebars on viewports ≥ 1400 px wide. The left sidebar holds a native banner from effectivecpmnetwork (loaded via script injection in a client component), while the right sidebar uses an Adsterra iframe. On smaller screens the sidebars are hidden and a horizontal Adsterra banner appears below the game panel.
-
-**Review system.** Player reviews are submitted through a form on the home page and persisted to a PostgreSQL database via a Next.js Route Handler under `/api/reviews`. The schema is created lazily on first use (`CREATE TABLE IF NOT EXISTS`), so no manual migration step is needed. When `DATABASE_URL` is unset the endpoint returns a friendly `503` instead of crashing.
-
-**SEO.** Every page exports explicit `title`, `description`, `canonical` and `openGraph` metadata. A static `sitemap.xml` is generated before each build and placed in `public/` so Vercel serves it directly from the edge without hitting a Serverless Function. A `robots.ts` file declares the sitemap location and allows all crawlers.
-
-**No CSS framework.** All styling lives in a single `globals.css` file using CSS custom properties for the design token layer. This keeps the bundle lean and makes theme adjustments trivial — change a handful of `:root` variables and the entire site updates.
-
----
-
-## Getting started
+ started
 
 ### Prerequisites
 

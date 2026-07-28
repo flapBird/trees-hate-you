@@ -1,6 +1,9 @@
 "use client";
 
-import { useEffect, useRef } from "react";
+import { useEffect, useRef, useState } from "react";
+
+const CONSENT_KEY = "trees-hate-you-privacy-consent-v1";
+const CONSENT_EVENT = "trees-hate-you-consent-changed";
 
 declare global {
   interface Window {
@@ -16,8 +19,20 @@ declare global {
 
 export default function AdsterraBanner() {
   const bannerRef = useRef<HTMLDivElement>(null);
+  const [enabled, setEnabled] = useState(false);
 
   useEffect(() => {
+    const syncConsent = () => setEnabled(localStorage.getItem(CONSENT_KEY) === "all");
+    syncConsent();
+    window.addEventListener(CONSENT_EVENT, syncConsent);
+    return () => window.removeEventListener(CONSENT_EVENT, syncConsent);
+  }, []);
+
+  useEffect(() => {
+    if (!enabled) {
+      return;
+    }
+
     if (!bannerRef.current || bannerRef.current.dataset.loaded === "true") {
       return;
     }
@@ -36,9 +51,11 @@ export default function AdsterraBanner() {
     script.src = "https://www.highperformanceformat.com/1362380e0bd383a3424b76882e4c199e/invoke.js";
     script.async = true;
     bannerRef.current.appendChild(script);
-  }, []);
+  }, [enabled]);
 
   return (
-    <div className="adsterra-banner" ref={bannerRef} aria-label="Advertisement" />
+    <div className="adsterra-banner" ref={bannerRef} aria-label="Advertisement">
+      {!enabled && <span className="ad-consent-note">Optional ads are off</span>}
+    </div>
   );
 }

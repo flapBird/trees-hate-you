@@ -3,7 +3,7 @@ import type { Metadata } from "next";
 export const metadata: Metadata = {
   title: "Contact — Trees Hate You",
   description:
-    "Contact the developer behind Trees Hate You, the viral rage-comedy tree trap game.",
+    "Contact the team behind this independent Trees Hate You fan site.",
   alternates: {
     canonical: "https://treeshateyou.help/contact",
   },

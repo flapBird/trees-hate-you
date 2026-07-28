@@ -1,9 +1,10 @@
 "use client";
 
-import { useState } from "react";
+import Link from "next/link";
+import { useEffect, useRef, useState } from "react";
 
 const links = [
-  { href: "/", label: "Play" },
+  { href: "/#play", label: "Play" },
   { href: "/#guide", label: "Guide" },
   { href: "/#faq", label: "FAQ" },
   { href: "/about", label: "About" }
@@ -11,30 +12,58 @@ const links = [
 
 export default function SiteHeader() {
   const [open, setOpen] = useState(false);
+  const headerRef = useRef<HTMLElement>(null);
+  const toggleRef = useRef<HTMLButtonElement>(null);
+
+  useEffect(() => {
+    if (!open) return;
+
+    const closeOnEscape = (event: KeyboardEvent) => {
+      if (event.key === "Escape") {
+        setOpen(false);
+        toggleRef.current?.focus();
+      }
+    };
+
+    const closeOnOutsidePress = (event: PointerEvent) => {
+      if (event.target instanceof Node && !headerRef.current?.contains(event.target)) {
+        setOpen(false);
+      }
+    };
+
+    document.addEventListener("keydown", closeOnEscape);
+    document.addEventListener("pointerdown", closeOnOutsidePress);
+    return () => {
+      document.removeEventListener("keydown", closeOnEscape);
+      document.removeEventListener("pointerdown", closeOnOutsidePress);
+    };
+  }, [open]);
 
   return (
-    <header className="site-header">
+    <header className="site-header" ref={headerRef}>
       <nav className="nav-wrap" aria-label="Primary navigation">
-        <a className="brand" href="/" onClick={() => setOpen(false)}>
+        <Link className="brand" href="/" onClick={() => setOpen(false)}>
           <span className="brand-mark" aria-hidden="true">THY</span>
           <span>Trees Hate You</span>
-        </a>
+        </Link>
         <button
+          ref={toggleRef}
           className="menu-toggle"
           type="button"
           aria-label={open ? "Close navigation" : "Open navigation"}
           aria-expanded={open}
+          aria-controls="site-navigation"
           onClick={() => setOpen((value) => !value)}
         >
           <span />
         </button>
-        <div className={open ? "nav-links nav-links-open" : "nav-links"}>
+        <div id="site-navigation" className={open ? "nav-links nav-links-open" : "nav-links"}>
           {links.map((link) => (
-            <a key={link.href} href={link.href} onClick={() => setOpen(false)}>
+            <Link key={link.href} href={link.href} onClick={() => setOpen(false)}>
               {link.label}
-            </a>
+            </Link>
           ))}
-          <a className="nav-play" href="/" onClick={() => setOpen(false)}>Play now</a>
+          <Link className="nav-play" href="/#play" onClick={() => setOpen(false)}>Play now</Link>
         </div>
       </nav>
     </header>

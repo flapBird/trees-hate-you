@@ -9,10 +9,12 @@
 - Embeds the official **Trees Hate You** web demo (hosted on nealfun.app) with fullscreen support
 - Provides a structured, long-form content layout covering what the game is, how to play, and who it's for
 - Includes a game guide, quick-facts sidebar, first-run playbook, and audience notes
-- Accepts player ratings and reviews via a form backed by a PostgreSQL database
+- Accepts moderated player ratings and reviews via a PostgreSQL database
+- Stores contact messages separately from public reviews
+- Uses consent-gated analytics and advertising with reversible privacy choices
 - Serves legal pages: About, Contact, Privacy Policy, and Terms & Conditions
-- Delivers a static `sitemap.xml` and `robots.txt` for search engine crawlers
-- Displays native and banner advertisements through Adsterra and effectivecpmnetwork
+- Delivers dynamic `sitemap.xml` and `robots.txt` metadata routes for search engines
+- Displays a consent-gated banner advertisement through Adsterra
 - Uses proper SEO metadata (title, description, canonical, Open Graph) on every route
 
 ---
@@ -28,7 +30,7 @@
 | Database | PostgreSQL via `pg` (reviews storage) |
 | Hosting | Vercel |
 | Analytics | Google Analytics 4 (gtag) |
-| Ads | Adsterra banners + effectivecpmnetwork native banners |
+| Ads | Consent-gated Adsterra banner |
 
 ---
 
@@ -36,31 +38,34 @@
 
 ```
 app/
-├── layout.tsx                  # Root layout: metadata, scripts, ad sidebars
+├── layout.tsx                  # Root layout: metadata and shared privacy services
 ├── page.tsx                    # Entry point → renders HomePage
 ├── home-page.tsx              # Main landing page (client component)
 ├── globals.css                 # All styles
 ├── robots.ts                   # Dynamic robots.txt
+├── sitemap.ts                  # Dynamic sitemap.xml
 ├── about/page.tsx              # About page
 ├── contact/
 │   ├── layout.tsx              # Contact metadata (canonical, title)
 │   └── page.tsx               # Contact form (client component)
 ├── privacy/page.tsx            # Privacy Policy
 ├── terms/page.tsx              # Terms & Conditions
-├── api/reviews/route.ts        # REST API: GET/POST reviews
+├── api/reviews/route.ts        # Approved reviews, statistics, and submissions
+├── api/contact/route.ts        # Private contact-message submissions
 ├── components/
 │   ├── SiteHeader.tsx          # Shared site header with navigation
 │   ├── SiteFooter.tsx          # Shared site footer
-│   ├── NativeBannerAd.tsx      # Native ad (script injection, client-only)
-│   └── AdsterraBanner.tsx      # Adsterra iframe banner (client-only)
-└── lib/db.ts                   # PostgreSQL pool + schema helper
-scripts/
-└── generate-sitemap.mjs        # Pre-build script: writes public/sitemap.xml
+│   ├── GoogleAnalytics.tsx     # Consent-gated GA4 loader
+│   ├── PrivacyConsent.tsx      # Privacy-choice panel
+│   └── AdsterraBanner.tsx      # Consent-gated banner ad
+lib/
+├── db.ts                       # PostgreSQL pool + schema helper
+└── submission-security.ts      # Same-origin and database rate limiting
 public/
 ├── favicon.svg / favicon-32.png / favicon-192.png
 ├── site.webmanifest
 ├── trees-hate-you-cover.jpg
-└── sitemap.xml                 # Generated at build time
+└── og.png                      # 1200 × 630 social sharing card
 ```
 
  started
@@ -97,11 +102,12 @@ Open [http://localhost:3000](http://localhost:3000). The dev server supports hot
 ### Build
 
 ```bash
-npm run build   # Runs presitemap → next build
+npm run build   # Runs the optimized Next.js production build
 npm start       # Serves the production build
 ```
 
-The `presitemap` script generates `public/sitemap.xml` before the Next.js build runs, ensuring the sitemap is always current.
+The sitemap is generated from `app/sitemap.ts`, so builds do not rewrite page
+timestamps when the content has not changed.
 
 ### Lint
 
@@ -115,30 +121,30 @@ npm run lint
 
 | Variable | Required | Description |
 |----------|----------|-------------|
-| `DATABASE_URL` | No | PostgreSQL connection string for storing player reviews. When absent the review API returns `503` gracefully. |
+| `DATABASE_URL` | No | PostgreSQL connection string for reviews and contact messages. |
+| `RATE_LIMIT_SECRET` | Recommended | Long random value used to hash abuse-prevention fingerprints. |
 
 ---
 
 ## Advertising partners
 
-This site is monetized through two ad networks:
-
-- **Adsterra** — 468 × 60 iframe banners below the game panel and in the right sidebar
-- **effectivecpmnetwork** — native banner in the left sidebar, loaded via script injection with `data-cfasync="false"` for Cloudflare compatibility
-
-Both integrations are isolated in their own client components to avoid hydration mismatches.
+This site uses an Adsterra 468 × 60 banner below the game panel. The advertising
+script and Google Analytics remain disabled until the visitor selects
+**Accept all** in the privacy choices panel.
 
 ---
 
 ## Deployment
 
-The site is deployed on [Vercel](https://vercel.com). Every push to `main` triggers a production build. The `presitemap` script runs automatically as part of `npm run build`, so `public/sitemap.xml` is regenerated on every deploy.
+The site is deployed on [Vercel](https://vercel.com). Every push to `main`
+triggers a production build. Next.js serves `robots.txt` and `sitemap.xml`
+directly from metadata routes.
 
 If you fork this project, update the following before deploying:
 - `metadataBase` and all canonical URLs in `layout.tsx` and sub-page layouts
 - Google Analytics measurement ID in `layout.tsx`
-- Ad network keys in `AdsterraBanner.tsx` and `NativeBannerAd.tsx`
-- `siteUrl` in `scripts/generate-sitemap.mjs`
+- The ad network key in `AdsterraBanner.tsx`
+- The canonical site URL in `layout.tsx`, `robots.ts`, and `sitemap.ts`
 
 ---
 

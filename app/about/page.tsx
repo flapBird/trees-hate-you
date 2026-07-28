@@ -40,14 +40,13 @@ export default function AboutPage() {
 
             <h2>Why the Internet Loves (and Hates) It</h2>
             <p>
-              Trees Hate You went viral on TikTok in late 2025, racking up over 475K likes as
-              streamers and players documented their increasingly unhinged reactions to being
-              murdered by shrubbery. The game resonates because it is genuinely funny — the
-              betrayals are creative, the deaths are absurd, and the rage is cathartic.
+              A developer-posted clip went viral in late 2025, and players quickly began sharing
+              increasingly unhinged reactions to being murdered by shrubbery. The game resonates
+              because the betrayals are creative, the deaths are absurd, and the rage is cathartic.
             </p>
             <p>
-              It has been described as "the Dark Souls of picnics," "a trust issues simulator,"
-              and "the reason I will never look at oak trees the same way again."
+              Players often describe it as the Dark Souls of picnics, a trust-issues simulator,
+              and a compelling reason to never look at oak trees the same way again.
             </p>
 
             <h2>About This Site</h2>
@@ -57,10 +56,16 @@ export default function AboutPage() {
               starts winning.
             </p>
             <p>
-              Trees Hate You is created by <strong>Tykenn</strong>. The demo is available on
-              itch.io, and a full Steam release is planned for 2026 with additional levels, new
-              tree types, and more creative ways to perish in a forest. This site is not
-              affiliated with Tykenn or the game&apos;s publisher.
+              Trees Hate You is created by <strong>Tykenn</strong>. The browser and Windows demo is
+              available on{" "}
+              <a href="https://tykenn.itch.io/trees-hate-you" target="_blank" rel="noopener noreferrer">
+                itch.io
+              </a>
+              , an updated demo is available on{" "}
+              <a href="https://store.steampowered.com/app/4307190/Trees_Hate_You_Demo/" target="_blank" rel="noopener noreferrer">
+                Steam
+              </a>
+              , and the full game is planned for 2026. This site is not affiliated with Tykenn.
             </p>
 
             <h2>Game Features</h2>
@@ -68,8 +73,9 @@ export default function AboutPage() {
               <li>Short, replayable levels designed for quick retries</li>
               <li>Creative traps — trees punch, shoot, drop, and deceive</li>
               <li>Instant respawn with no loading screens</li>
-              <li>Keyboard controls: WASD or Arrow Keys</li>
-              <li>Free demo available now on the web and itch.io</li>
+              <li>Keyboard and controller support</li>
+              <li>Character customization and an unlockable Challenge Mode</li>
+              <li>Free demo available on the web, itch.io, and Steam</li>
               <li>Full Steam release with expanded content coming in 2026</li>
             </ul>
 

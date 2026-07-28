@@ -24,7 +24,7 @@ export default function PrivacyPage() {
         <section className="legal-sheet" aria-label="Privacy Policy">
           <h1>Privacy Policy</h1>
           <p style={{ color: "var(--muted)", marginBottom: "8px" }}>
-            Last updated: June 11, 2026
+            Last updated: July 28, 2026
           </p>
 
           <div className="story">
@@ -35,20 +35,25 @@ export default function PrivacyPage() {
             </p>
             <ul style={{ color: "var(--muted)", lineHeight: "1.8", paddingLeft: "1.2em" }}>
               <li>Your chosen nickname</li>
-              <li>Your email address</li>
               <li>Your star rating (1–5)</li>
               <li>Your written review</li>
+              <li>Your email address only if you explicitly opt in to launch updates</li>
             </ul>
             <p>
-              We use your email solely to notify you about the full Steam release of Trees Hate You.
-              We never sell, rent, or share your personal information with third parties for their
-              own marketing purposes.
+              Reviews enter a moderation queue before they can appear publicly. If you opt in, we
+              use your email solely for a launch update. You can submit a review without providing
+              an email address.
+            </p>
+            <p>
+              When you use the Contact form, we collect your name, email address, and message so the
+              fan-site team can review the request. Contact messages are stored separately from
+              public reviews and are never published as player feedback.
             </p>
 
             <h3>1.2 Information Collected Automatically</h3>
             <p>
-              When you visit treeshateyou.help, we use Google Analytics (via gtag.js) to collect
-              anonymous usage data including:
+              If you select Accept all in the privacy choices panel, we use Google Analytics
+              (via gtag.js) to collect aggregated usage data including:
             </p>
             <ul style={{ color: "var(--muted)", lineHeight: "1.8", paddingLeft: "1.2em" }}>
               <li>Pages visited and time spent on each page</li>
@@ -57,27 +62,26 @@ export default function PrivacyPage() {
               <li>General geographic location (country/city level)</li>
             </ul>
             <p>
-              This data is anonymized and aggregated. It helps us understand how players
-              discover and interact with the game.
+              Analytics and advertising scripts do not load when you select Essential only.
             </p>
 
             <h2>2. Cookies</h2>
             <p>
-              Google Analytics sets cookies in your browser to track session data and
-              distinguish returning visitors. These are first-party analytics cookies and do not
-              contain personally identifiable information.
+              Essential site storage remembers your privacy choice. If you accept all, Google
+              Analytics and our advertising partner may use cookies or similar storage to measure
+              traffic, control ad frequency, and understand campaign performance.
             </p>
-            <p>
-              Our advertising partners may also set cookies for frequency capping, ad
-              personalization, and performance measurement. You can manage or disable cookies
-              through your browser settings at any time.
+            <p id="choices">
+              You can reopen the privacy choices panel at any time using the Privacy choices button
+              in the footer. Changing from Accept all to Essential only reloads the page so optional
+              scripts stop running.
             </p>
 
             <h2>3. Third-Party Services</h2>
             <h3>3.1 Google Analytics</h3>
             <p>
-              We use Google Analytics 4 (GA4) to measure site traffic and usage patterns.
-              Google's privacy policy is available at{" "}
+              With your consent, we use Google Analytics 4 (GA4) to measure site traffic and usage patterns.
+              Google&apos;s privacy policy is available at{" "}
               <a href="https://policies.google.com/privacy" target="_blank" rel="noopener noreferrer" style={{ color: "var(--leaf)", textDecoration: "underline" }}>
                 policies.google.com/privacy
               </a>.
@@ -85,7 +89,7 @@ export default function PrivacyPage() {
 
             <h3>3.2 Advertising</h3>
             <p>
-              treeshateyou.help displays advertisements served by third-party ad networks.
+              With your consent, treeshateyou.help displays advertisements served by a third-party ad network.
               These networks may use cookies, web beacons, and similar technologies to serve
               relevant ads and measure their effectiveness. Your browser may send information
               such as your IP address and browser type to these networks.
@@ -100,10 +104,10 @@ export default function PrivacyPage() {
 
             <h2>4. Data Retention</h2>
             <p>
-              Review submissions (nickname, email, rating, review) are stored in our database
-              indefinitely unless you request deletion. Google Analytics data is retained
-              according to Google's default data retention settings (currently 14 months for
-              event-level data).
+              Review submissions and contact messages are retained while they are needed for
+              moderation, publication, support, abuse prevention, or legal obligations. Rejected
+              reviews and resolved contact messages may be deleted during routine maintenance.
+              Analytics retention is controlled in the Google Analytics property settings.
             </p>
 
             <h2>5. Your Rights</h2>

@@ -1,6 +1,5 @@
 "use client";
 
-import type { Metadata } from "next";
 import { FormEvent, useState } from "react";
 import SiteFooter from "../components/SiteFooter";
 import SiteHeader from "../components/SiteHeader";
@@ -18,20 +17,20 @@ export default function ContactPage() {
     setFormMessage("Sending your message through the forest...");
 
     try {
-      const response = await fetch("/api/reviews", {
+      const response = await fetch("/api/contact", {
         method: "POST",
         headers: { "Content-Type": "application/json" },
         body: JSON.stringify({
-          nickname: formData.get("name"),
+          name: formData.get("name"),
           email: formData.get("email"),
-          review: `[CONTACT] ${formData.get("message")}`,
-          rating: 5
+          message: formData.get("message"),
+          website: formData.get("website")
         })
       });
 
       if (response.ok) {
         setFormState("success");
-        setFormMessage("Message sent! We'll get back to you soon.");
+        setFormMessage("Message received. Thanks for getting in touch.");
         form.reset();
       } else {
         const data = await response.json().catch(() => null) as { error?: string } | null;
@@ -58,7 +57,16 @@ export default function ContactPage() {
             </p>
 
             <h2>Send a Message</h2>
-            <form className="review-form" onSubmit={submitContact} style={{ marginTop: "16px" }}>
+            <form
+              className="review-form"
+              onSubmit={submitContact}
+              style={{ marginTop: "16px" }}
+              aria-busy={formState === "submitting"}
+            >
+              <label className="form-honeypot" aria-hidden="true">
+                Website
+                <input name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" />
+              </label>
               <label>
                 Your Name
                 <input name="name" placeholder="Your forest survivor name" required maxLength={48} />
@@ -76,7 +84,7 @@ export default function ContactPage() {
                 <span>{formState === "submitting" ? "Sending..." : "Send Message 🌲"}</span>
               </button>
               {formMessage && (
-                <p className={`form-message ${formState}`}>{formMessage}</p>
+                <p className={`form-message ${formState}`} aria-live="polite">{formMessage}</p>
               )}
             </form>
 
@@ -90,8 +98,8 @@ export default function ContactPage() {
             </p>
             <p>
               For press inquiries, collaboration requests, or business matters, use the contact
-              form above and we&apos;ll reply when we can. For official game news, please follow the
-              developer&apos;s channels directly.
+              form above. For official game news, please follow the developer&apos;s channels
+              directly.
             </p>
 
             <p className="credit">

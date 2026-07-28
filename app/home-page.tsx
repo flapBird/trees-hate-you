@@ -1,5 +1,6 @@
 "use client";
 
+import Image from "next/image";
 import { FormEvent, useEffect, useRef, useState } from "react";
 import AdsterraBanner from "./components/AdsterraBanner";
 import SiteFooter from "./components/SiteFooter";
@@ -15,13 +16,39 @@ const ratingMessages: Record<number, string> = {
   5: "Legend. The trees fear you now."
 };
 
+type PublicReview = {
+  id: string;
+  nickname: string;
+  rating: number;
+  review: string;
+  created_at: string;
+};
+
+type ReviewResponse = {
+  configured: boolean;
+  reviews: PublicReview[];
+  stats: {
+    average: number | null;
+    count: number;
+  };
+};
 
 export default function HomePage() {
   const gameWrapRef = useRef<HTMLDivElement>(null);
   const [gameStarted, setGameStarted] = useState(false);
+  const [gameLoading, setGameLoading] = useState(false);
+  const [isTouchDevice, setIsTouchDevice] = useState(false);
+  const [showDeviceWarning, setShowDeviceWarning] = useState(false);
   const [isFullscreen, setIsFullscreen] = useState(false);
   const [rating, setRating] = useState(5);
   const [hoverRating, setHoverRating] = useState(0);
+  const [launchUpdates, setLaunchUpdates] = useState(false);
+  const [reviews, setReviews] = useState<PublicReview[]>([]);
+  const [reviewStats, setReviewStats] = useState<ReviewResponse["stats"]>({
+    average: null,
+    count: 0
+  });
+  const [reviewsLoading, setReviewsLoading] = useState(true);
   const [formState, setFormState] = useState<"idle" | "submitting" | "success" | "error">("idle");
   const [formMessage, setFormMessage] = useState("Choose a rating, then leave a note for the forest.");
 
@@ -31,12 +58,67 @@ export default function HomePage() {
     return () => document.removeEventListener("fullscreenchange", syncFullscreen);
   }, []);
 
+  useEffect(() => {
+    const media = window.matchMedia("(pointer: coarse)");
+    const syncPointer = () => setIsTouchDevice(media.matches || navigator.maxTouchPoints > 0);
+    syncPointer();
+    media.addEventListener?.("change", syncPointer);
+    return () => media.removeEventListener?.("change", syncPointer);
+  }, []);
+
+  useEffect(() => {
+    const controller = new AbortController();
+
+    async function loadReviews() {
+      try {
+        const response = await fetch("/api/reviews", {
+          cache: "no-store",
+          signal: controller.signal
+        });
+        if (!response.ok) return;
+        const data = (await response.json()) as ReviewResponse;
+        setReviews(data.reviews);
+        setReviewStats(data.stats);
+      } catch {
+        // Reviews are secondary content; keep the game usable if they are unavailable.
+      } finally {
+        setReviewsLoading(false);
+      }
+    }
+
+    loadReviews();
+    return () => controller.abort();
+  }, []);
+
+  function beginGame(skipDeviceWarning = false) {
+    if (isTouchDevice && !skipDeviceWarning) {
+      setShowDeviceWarning(true);
+      gameWrapRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+      return;
+    }
+
+    setShowDeviceWarning(false);
+    setGameLoading(true);
+    setGameStarted(true);
+    window.setTimeout(() => {
+      gameWrapRef.current?.scrollIntoView({ behavior: "smooth", block: "center" });
+    }, 0);
+  }
+
   async function enterFullscreen() {
-    await gameWrapRef.current?.requestFullscreen?.();
+    try {
+      await gameWrapRef.current?.requestFullscreen?.();
+    } catch {
+      // Browsers can reject fullscreen when it is unavailable or not user initiated.
+    }
   }
 
   async function exitFullscreen() {
-    await document.exitFullscreen?.();
+    try {
+      await document.exitFullscreen?.();
+    } catch {
+      // Keep the game usable if the browser has already left fullscreen.
+    }
   }
 
   async function submitReview(event: FormEvent<HTMLFormElement>) {
@@ -54,7 +136,9 @@ export default function HomePage() {
           nickname: formData.get("nickname"),
           email: formData.get("email"),
           review: formData.get("review"),
-          rating
+          rating,
+          launchUpdates,
+          website: formData.get("website")
         })
       });
 
@@ -64,8 +148,9 @@ export default function HomePage() {
       }
 
       form.reset();
+      setLaunchUpdates(false);
       setFormState("success");
-      setFormMessage("Thanks. The trees have noted your feedback.");
+      setFormMessage("Thanks. Your review is waiting for moderation.");
     } catch (error) {
       setFormState("error");
       setFormMessage(error instanceof Error ? error.message : "The trees ate the request. Try again.");
@@ -82,31 +167,71 @@ export default function HomePage() {
             <div className="hero-intro">
               <p className="eyebrow">A viral rage-comedy trap game</p>
               <h1>Trees Hate You: play the viral tree rage game online.</h1>
-              <p className="hero-summary">Take one peaceful walk home after a picnic. Avoid the traps. Distrust every tree. Die quickly. Retry immediately. Trees Hate You turns a simple trip through the woods into a very personal series of bad decisions.</p>
+              <p className="hero-summary">Take one peaceful walk home after a picnic. Distrust every tree, die quickly, and retry immediately.</p>
               <div className="hero-pills" aria-label="Game details">
                 <span>Free web demo</span>
-                <span>Keyboard controls</span>
+                <span>Keyboard or controller</span>
                 <span>Instant retry</span>
+              </div>
+              <div className="hero-actions">
+                <button className="primary-action" type="button" onClick={() => beginGame()}>
+                  Play browser demo <span aria-hidden="true">▶</span>
+                </button>
               </div>
             </div>
 
             <div className="game-surface">
               <div className="game-toolbar">
-                <span className="game-status"><i /> Live demo</span>
+                <span className="game-status">
+                  <i /> {gameStarted ? (gameLoading ? "Loading demo" : "Demo ready") : "Browser demo"}
+                </span>
                 <button className="icon-button" type="button" onClick={enterFullscreen} aria-label="Enter fullscreen" title="Enter fullscreen">⛶</button>
               </div>
               <div className="game-frame-wrap" ref={gameWrapRef}>
                 <iframe
                   src={gameStarted ? gameUrl : "about:blank"}
                   title="Trees Hate You playable game"
-                  allow="fullscreen; gamepad"
+                  allow="fullscreen; gamepad; autoplay"
                   allowFullScreen
+                  referrerPolicy="no-referrer"
+                  sandbox="allow-scripts allow-same-origin allow-pointer-lock allow-popups allow-popups-to-escape-sandbox"
+                  onLoad={() => gameStarted && setGameLoading(false)}
                 />
-                {!gameStarted && (
-                  <button className="game-start" type="button" onClick={() => setGameStarted(true)} aria-label="Play Trees Hate You">
-                    <img src="/trees-hate-you-cover.jpg" alt="Trees Hate You game art" />
+                {!gameStarted && !showDeviceWarning && (
+                  <button className="game-start" type="button" onClick={() => beginGame()} aria-label="Play Trees Hate You">
+                    <Image
+                      src="/trees-hate-you-cover.jpg"
+                      alt="Trees Hate You game art"
+                      width={318}
+                      height={318}
+                      sizes="(max-width: 767px) 65vw, 300px"
+                      priority
+                    />
                     <span className="play-button">Play the demo <b>▶</b></span>
                   </button>
+                )}
+                {showDeviceWarning && (
+                  <div className="device-warning" role="dialog" aria-modal="true" aria-labelledby="device-warning-title">
+                    <div>
+                      <p className="eyebrow">Before you load the game</p>
+                      <h2 id="device-warning-title">Keyboard or gamepad required.</h2>
+                      <p>The web demo has no touch controls and may be slow on mobile devices.</p>
+                      <div className="warning-actions">
+                        <button type="button" className="primary-action" onClick={() => beginGame(true)}>Continue anyway</button>
+                        <button type="button" className="text-action" onClick={() => setShowDeviceWarning(false)}>Not now</button>
+                      </div>
+                    </div>
+                  </div>
+                )}
+                {gameStarted && gameLoading && (
+                  <div className="game-loading" role="status" aria-live="polite">
+                    <span
+                      className="t-shimmer"
+                      data-text="Loading the browser demo. This can take 15–30 seconds."
+                    >
+                      Loading the browser demo. This can take 15–30 seconds.
+                    </span>
+                  </div>
                 )}
                 {isFullscreen && (
                   <button className="fullscreen-exit" type="button" onClick={exitFullscreen} aria-label="Exit fullscreen" title="Exit fullscreen">×</button>
@@ -126,14 +251,12 @@ export default function HomePage() {
             <article className="overview-copy">
               <p className="eyebrow">What is Trees Hate You?</p>
               <h2>What is Trees Hate You?</h2>
-              <p>Trees Hate You is a short-form rage-comedy platform game. You play a kid trying to get home after a picnic, but the forest has decided you&apos;re not invited to leave. There is no grand quest, no friendly guide, and no safe scenic route. There is only the next suspicious patch of grass and the feeling that you should probably have stopped moving two seconds ago.</p>
-              <p>The trick is that danger rarely announces itself. A harmless-looking path can shoot you, punch you, drop something on you, or wait just long enough to make you feel clever before it ruins the run. The joke is not simply that the player dies. The joke is how confidently the game convinces you that this time, surely, it will not happen again.</p>
-              <p>Levels are compact and respawns are instant, so the loop is simple: notice a trap, make a worse mistake, laugh, then try again. That makes Trees Hate You easy to pick up for a five-minute break, but surprisingly hard to put down once you are convinced you can get past one more screen.</p>
-              <p>It is closer to a playable comedy sketch than a long-form adventure. Every obstacle has a setup and a punchline, and every successful run feels earned because you learned something from the failure before it. If you enjoy trap games, rage bait games, unpredictable platformers, or watching a game weaponize your own confidence, this is exactly the kind of forest walk you are looking for.</p>
+              <p>Trees Hate You is a short-form rage-comedy trap game. You play a kid trying to get home after a picnic, but the forest has decided you&apos;re not invited to leave. Harmless paths can shoot, punch, drop, or trick you the moment you feel safe.</p>
+              <p>Compact levels and quick respawns keep the joke moving: notice a trap, make a worse mistake, laugh, then try again. It feels closer to a playable comedy sketch than a long adventure, with every failure teaching you one small thing about the next attempt.</p>
             </article>
             <aside className="quick-facts" aria-label="Quick facts">
               <div><span>Genre</span><strong>Rage-comedy platformer</strong></div>
-              <div><span>Controls</span><strong>WASD or arrow keys</strong></div>
+              <div><span>Controls</span><strong>WASD, arrow keys, or controller</strong></div>
               <div><span>Session</span><strong>Short runs, instant respawn</strong></div>
               <div><span>Best rule</span><strong>Nothing is safe</strong></div>
               <div><span>Ideal for</span><strong>Short, chaotic challenge runs</strong></div>
@@ -199,14 +322,15 @@ export default function HomePage() {
           <div className="content-wrap faq-grid">
             <div className="section-heading">
               <p className="eyebrow">FAQ</p>
-              <h2>Frequently Asked Question</h2>
+              <h2>Frequently Asked Questions</h2>
             </div>
             <div className="faq-list">
               <details open><summary>Can I play Trees Hate You for free?</summary><p>Yes. The web demo is free to start from the game panel at the top of this page. Click Play the demo, wait for the game frame to load, and use a keyboard for the smoothest controls. No account is required for the basic web experience.</p></details>
-              <details><summary>What are the Trees Hate You controls?</summary><p>Use WASD or the arrow keys to move. A keyboard is recommended because the game relies on quick, precise reactions and small position changes. The site works on mobile, but the game itself is designed around desktop-style controls.</p></details>
+              <details><summary>What are the Trees Hate You controls?</summary><p>Use WASD, the arrow keys, or the left stick on a supported controller. The web demo has no touch controls, so a desktop browser is recommended.</p></details>
               <details><summary>Why do I keep dying to the same Trees Hate You trap?</summary><p>Because the game is a trap comedy, not just a reflex test. Look for timing, movement cues, objects that appeared after you moved, and anything that looks suspiciously normal. After each death, change one part of your approach so you can learn which action caused the problem.</p></details>
               <details><summary>Is Trees Hate You hard for new players?</summary><p>It can be, but the difficulty is built around short attempts rather than long punishments. You do not lose a large amount of progress after a mistake. Instead, you get a quick restart and a clearer idea of what the level was trying to do to you.</p></details>
-              <details><summary>Can I play Trees Hate You on mobile?</summary><p>The website is responsive and the game panel can be opened from a mobile browser. For the intended experience, though, play on a desktop or laptop with a keyboard. That gives you more control over movement and makes it easier to react to sudden traps.</p></details>
+              <details><summary>Can I play Trees Hate You on mobile?</summary><p>You can open this website on mobile, but the demo requires a keyboard or gamepad and may run slowly in some mobile browsers. Use a desktop or laptop for the intended experience.</p></details>
+              <details><summary>What if the browser demo does not load?</summary><p>Try another desktop browser or use the official itch.io and Steam demo links below the game. The downloadable builds are a better fallback for low frame rates or blocked embeds.</p></details>
               <details><summary>Is Trees Hate You a horror game?</summary><p>Not in the traditional sense. It uses tension, surprises, and jump-like moments, but the overall tone is comedic. The game is designed to make a failure feel ridiculous rather than grim, even when a tree has clearly planned your downfall.</p></details>
               <details><summary>Is this the official Trees Hate You site?</summary><p>No. This is a fan-made information and play hub, not an official Tykenn property. The game demo is loaded from an external host, and official announcements should always be checked through the developer&apos;s own channels.</p></details>
             </div>
@@ -218,33 +342,92 @@ export default function HomePage() {
             <div className="section-heading feedback-heading">
               <p className="eyebrow">Player notes</p>
               <h2>Rate your Trees Hate You run.</h2>
-              <p>Average player score <strong>4.7 / 5</strong> from 312 ratings.</p>
+              <p>
+                {reviewsLoading
+                  ? "Loading approved player reviews..."
+                  : reviewStats.count > 0
+                    ? <>Approved player score <strong>{reviewStats.average?.toFixed(1)} / 5</strong> from {reviewStats.count} {reviewStats.count === 1 ? "rating" : "ratings"}.</>
+                    : "No approved player ratings yet. Be the first to leave one."}
+              </p>
             </div>
-            <form className="review-form" onSubmit={submitReview}>
-              <div className="stars" role="radiogroup" aria-label="Rate Trees Hate You">
-                {[1, 2, 3, 4, 5].map((value) => (
-                  <button
-                    key={value}
-                    type="button"
-                    role="radio"
-                    aria-label={`${value} stars`}
-                    aria-checked={rating === value}
-                    className={value <= (hoverRating || rating) ? "active" : ""}
-                    onMouseEnter={() => setHoverRating(value)}
-                    onMouseLeave={() => setHoverRating(0)}
-                    onFocus={() => setHoverRating(value)}
-                    onBlur={() => setHoverRating(0)}
-                    onClick={() => setRating(value)}
-                  >★</button>
-                ))}
-              </div>
+            <form className="review-form" onSubmit={submitReview} aria-busy={formState === "submitting"}>
+              <label className="form-honeypot" aria-hidden="true">
+                Website
+                <input name="website" tabIndex={-1} autoComplete="off" aria-hidden="true" />
+              </label>
+              <fieldset className="stars">
+                <legend>Rate Trees Hate You</legend>
+                <div className="star-row">
+                  {[1, 2, 3, 4, 5].map((value) => (
+                    <label
+                      key={value}
+                      className={value <= (hoverRating || rating) ? "star-option active" : "star-option"}
+                      onMouseEnter={() => setHoverRating(value)}
+                      onMouseLeave={() => setHoverRating(0)}
+                    >
+                      <input
+                        type="radio"
+                        name="rating"
+                        value={value}
+                        checked={rating === value}
+                        onFocus={() => setHoverRating(value)}
+                        onBlur={() => setHoverRating(0)}
+                        onChange={() => setRating(value)}
+                      />
+                      <span aria-hidden="true">★</span>
+                      <span className="visually-hidden">{value} stars</span>
+                    </label>
+                  ))}
+                </div>
+              </fieldset>
               <p className="rating-copy">{ratingMessages[rating]}</p>
               <label>Nickname<input name="nickname" placeholder="Your forest survivor name" required maxLength={48} /></label>
-              <label>Email<input name="email" type="email" placeholder="your@email.com" required maxLength={160} /><small>Only used for full-game launch news.</small></label>
+              <label>
+                Email <span className="optional-label">(optional)</span>
+                <input
+                  name="email"
+                  type="email"
+                  placeholder="your@email.com"
+                  required={launchUpdates}
+                  disabled={!launchUpdates}
+                  maxLength={160}
+                />
+              </label>
+              <label className="consent-check">
+                <input
+                  type="checkbox"
+                  checked={launchUpdates}
+                  onChange={(event) => setLaunchUpdates(event.target.checked)}
+                />
+                <span>Email me once when the full game launches. You can submit a review without subscribing.</span>
+              </label>
               <label>Your review<textarea name="review" placeholder="Describe your most humiliating death..." required maxLength={600} /></label>
               <button className="submit-review" type="submit" disabled={formState === "submitting"}>{formState === "submitting" ? "Submitting..." : "Submit review"}</button>
-              <p className={`form-message ${formState}`}>{formMessage}</p>
+              <p className={`form-message ${formState}`} aria-live="polite">{formMessage}</p>
             </form>
+            {reviews.length > 0 && (
+              <div className="review-strip" aria-label="Approved player reviews">
+                {reviews.slice(0, 6).map((item) => (
+                  <article className="player-review" key={item.id}>
+                    <span className={`avatar ${item.rating >= 5 ? "yellow" : item.rating >= 4 ? "green" : "red"}`} aria-hidden="true">
+                      {item.nickname.slice(0, 1).toUpperCase()}
+                    </span>
+                    <div>
+                      <div className="review-head">
+                        <strong>{item.nickname}</strong>
+                        <time dateTime={item.created_at}>
+                          {new Intl.DateTimeFormat("en", { dateStyle: "medium" }).format(new Date(item.created_at))}
+                        </time>
+                      </div>
+                      <div className="review-stars" aria-label={`${item.rating} out of 5 stars`}>
+                        {"★".repeat(item.rating)}{"☆".repeat(5 - item.rating)}
+                      </div>
+                      <p>{item.review}</p>
+                    </div>
+                  </article>
+                ))}
+              </div>
+            )}
           </div>
         </section>
       </main>

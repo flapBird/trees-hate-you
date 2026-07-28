@@ -1,20 +1,29 @@
+"use client";
+
+import Link from "next/link";
+
 export default function SiteFooter() {
+  function openPrivacyChoices() {
+    window.dispatchEvent(new Event("trees-hate-you-open-privacy-choices"));
+  }
+
   return (
     <footer className="site-footer">
       <div className="footer-inner">
         <div className="footer-brand">
-          <a className="brand" href="/">
+          <Link className="brand" href="/">
             <span className="brand-mark" aria-hidden="true">THY</span>
             <span>Trees Hate You</span>
-          </a>
+          </Link>
           <p>A small fan-made place to play, learn, and complain about suspicious trees.</p>
         </div>
         <nav className="footer-links" aria-label="Footer navigation">
-          <a href="/">Play</a>
-          <a href="/about">About</a>
-          <a href="/contact">Contact</a>
-          <a href="/privacy">Privacy Policy</a>
-          <a href="/terms">Terms &amp; Conditions</a>
+          <Link href="/#play">Play</Link>
+          <Link href="/about">About</Link>
+          <Link href="/contact">Contact</Link>
+          <Link href="/privacy">Privacy Policy</Link>
+          <button className="footer-button" type="button" onClick={openPrivacyChoices}>Privacy choices</button>
+          <Link href="/terms">Terms &amp; Conditions</Link>
         </nav>
       </div>
       <div className="footer-bottom">

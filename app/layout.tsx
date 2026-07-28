@@ -1,5 +1,5 @@
 import type { Metadata, Viewport } from "next";
-import Script from "next/script";
+import GoogleAnalytics from "./components/GoogleAnalytics";
 import "./globals.css";
 
 export const viewport: Viewport = {
@@ -30,13 +30,20 @@ export const metadata: Metadata = {
     url: "https://treeshateyou.help",
     siteName: "Trees Hate You Help",
     type: "website",
-    images: ["/og-image.jpg"]
+    images: [
+      {
+        url: "/og.png",
+        width: 1200,
+        height: 630,
+        alt: "Trees Hate You — play the free browser demo"
+      }
+    ]
   },
   twitter: {
     card: "summary_large_image",
     title: "Trees Hate You - Play Online Free",
     description: "The viral rage bait game where every tree is suspicious and every death is deserved by the forest.",
-    images: ["/og-image.jpg"]
+    images: ["/og.png"]
   },
   robots: {
     index: true,
@@ -52,6 +59,13 @@ const jsonLd = {
   genre: ["Rage Game", "Indie Game", "Comedy Game"],
   gamePlatform: ["PC", "Web Browser"],
   url: "https://treeshateyou.help",
+  sameAs: [
+    "https://tykenn.itch.io/trees-hate-you",
+    "https://store.steampowered.com/app/4171850/Trees_Hate_You/"
+  ],
+  isAccessibleForFree: true,
+  playMode: "SinglePlayer",
+  operatingSystem: "Web browser, Windows, SteamOS, Linux",
   author: {
     "@type": "Person",
     name: "Tykenn"
@@ -65,15 +79,6 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
       <head>
         <link rel="preconnect" href="https://nealfun.app" />
         <link rel="dns-prefetch" href="https://nealfun.app" />
-        <Script async src="https://www.googletagmanager.com/gtag/js?id=G-FJWM0N3HTC" strategy="afterInteractive" />
-        <Script id="google-analytics" strategy="afterInteractive">
-          {`
-            window.dataLayer = window.dataLayer || [];
-            function gtag(){dataLayer.push(arguments);}
-            gtag('js', new Date());
-            gtag('config', 'G-FJWM0N3HTC');
-          `}
-        </Script>
       </head>
       <body>
         <script
@@ -81,6 +86,7 @@ export default function RootLayout({ children }: Readonly<{ children: React.Reac
           dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
         />
         {children}
+        <GoogleAnalytics />
       </body>
     </html>
   );

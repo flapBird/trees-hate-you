@@ -25,7 +25,10 @@ export default function TermsPage() {
           <p>The game demo is hosted by a third-party service. Game content, trademarks, and related intellectual property belong to their respective owners. This site is not affiliated with Tykenn or the game&apos;s publisher.</p>
 
           <h2>Feedback</h2>
-          <p>When you submit a rating, review, or message, please keep it lawful and respectful. We may remove content that is abusive, misleading, automated, or otherwise unsuitable for the site.</p>
+          <p>When you submit a rating or review, it enters a moderation queue before publication. Please keep submissions lawful and respectful. We may reject or remove content that is abusive, misleading, automated, promotional, or otherwise unsuitable for the site. Contact messages are stored separately and are not published as reviews.</p>
+
+          <h2>Privacy choices</h2>
+          <p>Optional analytics and advertising services load only after you select Accept all. You can change that choice using the Privacy choices button in the footer.</p>
 
           <h2>Availability</h2>
           <p>We try to keep the site available, but cannot guarantee uninterrupted access. The embedded game, advertising partners, analytics services, and other third-party features may change or become unavailable without notice.</p>

@@ -11,7 +11,7 @@
 - Includes a game guide, quick-facts sidebar, first-run playbook, and audience notes
 - Accepts moderated player ratings and reviews via a PostgreSQL database
 - Stores contact messages separately from public reviews
-- Uses consent-gated analytics and advertising with reversible privacy choices
+- Uses Google Analytics 4 for usage measurement (temporarily without consent gating)
 - Serves legal pages: About, Contact, Privacy Policy, and Terms & Conditions
 - Delivers dynamic `sitemap.xml` and `robots.txt` metadata routes for search engines
 - Displays a consent-gated banner advertisement through Adsterra
@@ -55,9 +55,8 @@ app/
 ├── components/
 │   ├── SiteHeader.tsx          # Shared site header with navigation
 │   ├── SiteFooter.tsx          # Shared site footer
-│   ├── GoogleAnalytics.tsx     # Consent-gated GA4 loader
-│   ├── PrivacyConsent.tsx      # Privacy-choice panel
-│   └── AdsterraBanner.tsx      # Consent-gated banner ad
+│   ├── GoogleAnalytics.tsx     # GA4 loader (measurement ID from env)
+│   └── AdsterraBanner.tsx      # Banner ad
 lib/
 ├── db.ts                       # PostgreSQL pool + schema helper
 └── submission-security.ts      # Same-origin and database rate limiting
@@ -130,8 +129,8 @@ npm run lint
 ## Advertising partners
 
 This site uses an Adsterra 468 × 60 banner below the game panel. The advertising
-script and Google Analytics remain disabled until the visitor selects
-**Accept all** in the privacy choices panel.
+script and Google Analytics load by default (consent gating is temporarily
+disabled for debugging).
 
 ---
 

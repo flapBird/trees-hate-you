@@ -3,10 +3,6 @@
 import Link from "next/link";
 
 export default function SiteFooter() {
-  function openPrivacyChoices() {
-    window.dispatchEvent(new Event("trees-hate-you-open-privacy-choices"));
-  }
-
   return (
     <footer className="site-footer">
       <div className="footer-inner">
@@ -22,7 +18,6 @@ export default function SiteFooter() {
           <Link href="/about">About</Link>
           <Link href="/contact">Contact</Link>
           <Link href="/privacy">Privacy Policy</Link>
-          <button className="footer-button" type="button" onClick={openPrivacyChoices}>Privacy choices</button>
           <Link href="/terms">Terms &amp; Conditions</Link>
         </nav>
       </div>

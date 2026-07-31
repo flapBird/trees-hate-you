@@ -3,7 +3,7 @@
 import Script from "next/script";
 
 const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
-const GA_ID_VALID = /^[A-Z]{2}-[A-Z0-9-]+$/.test(GA_MEASUREMENT_ID ?? "");
+const GA_ID_VALID = /^G-[A-Z0-9]+$/.test(GA_MEASUREMENT_ID ?? "");
 
 export default function GoogleAnalytics() {
   if (!GA_ID_VALID) {

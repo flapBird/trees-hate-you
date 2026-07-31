@@ -1,4 +1,5 @@
 import type { Metadata } from "next";
+import AdsterraAboutBanners from "../components/AdsterraAboutBanners";
 import SiteFooter from "../components/SiteFooter";
 import SiteHeader from "../components/SiteHeader";
 
@@ -20,9 +21,10 @@ export default function AboutPage() {
   return (
     <>
       <SiteHeader />
-      <main className="legal-main">
+      <main className="legal-main about-main">
+        <AdsterraAboutBanners />
         <section className="legal-sheet" aria-label="About Trees Hate You">
-          <h1>About Trees Hate You</h1>
+            <h1>About Trees Hate You</h1>
 
           <div className="story">
             <h2>A Forest With a Grudge</h2>

@@ -3,6 +3,8 @@
 import Image from "next/image";
 import { FormEvent, useEffect, useRef, useState } from "react";
 import AdsterraBanner from "./components/AdsterraBanner";
+import AdsterraBottomBanners from "./components/AdsterraBottomBanners";
+import AdsterraSideBanners from "./components/AdsterraSideBanners";
 import SiteFooter from "./components/SiteFooter";
 import SiteHeader from "./components/SiteHeader";
 
@@ -239,9 +241,12 @@ export default function HomePage() {
               </div>
             </div>
 
-            <div className="ad-slot" aria-label="Advertisement">
-              <span>Advertisement</span>
-              <AdsterraBanner />
+            <div className="game-hero-ads">
+              <div className="ad-slot" aria-label="Advertisement">
+                <span>Advertisement</span>
+                <AdsterraBanner />
+              </div>
+              <AdsterraBottomBanners />
             </div>
           </div>
         </section>
@@ -339,16 +344,19 @@ export default function HomePage() {
 
         <section className="feedback-section" id="rate">
           <div className="content-wrap feedback-grid">
-            <div className="section-heading feedback-heading">
-              <p className="eyebrow">Player notes</p>
-              <h2>Rate your Trees Hate You run.</h2>
-              <p>
-                {reviewsLoading
-                  ? "Loading approved player reviews..."
-                  : reviewStats.count > 0
-                    ? <>Approved player score <strong>{reviewStats.average?.toFixed(1)} / 5</strong> from {reviewStats.count} {reviewStats.count === 1 ? "rating" : "ratings"}.</>
-                    : "No approved player ratings yet. Be the first to leave one."}
-              </p>
+            <div className="feedback-aside">
+              <div className="section-heading feedback-heading">
+                <p className="eyebrow">Player notes</p>
+                <h2>Rate your Trees Hate You run.</h2>
+                <p>
+                  {reviewsLoading
+                    ? "Loading approved player reviews..."
+                    : reviewStats.count > 0
+                      ? <>Approved player score <strong>{reviewStats.average?.toFixed(1)} / 5</strong> from {reviewStats.count} {reviewStats.count === 1 ? "rating" : "ratings"}.</>
+                      : "No approved player ratings yet. Be the first to leave one."}
+                </p>
+              </div>
+              <AdsterraSideBanners />
             </div>
             <form className="review-form" onSubmit={submitReview} aria-busy={formState === "submitting"}>
               <label className="form-honeypot" aria-hidden="true">

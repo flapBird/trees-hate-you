@@ -11,9 +11,6 @@ export const metadata: Metadata = {
   title: "Trees Hate You | Play the Viral Tree Rage Game Online",
   description:
     "Play Trees Hate You online free, the viral rage-comedy trap game where hostile trees shoot, punch, and trick you through the world's worst forest walk.",
-  alternates: {
-    canonical: "https://treeshateyou.help"
-  },
   icons: {
     icon: [
       { url: "/favicon-32.png", type: "image/png", sizes: "32x32" },
@@ -27,7 +24,6 @@ export const metadata: Metadata = {
   openGraph: {
     title: "Trees Hate You - Viral Tree Rage Game",
     description: "Play the rage-comedy trap game where a nice forest walk turns into botanical violence.",
-    url: "https://treeshateyou.help",
     siteName: "Trees Hate You Help",
     type: "website",
     images: [
@@ -58,7 +54,7 @@ const jsonLd = {
   description: "A viral rage-comedy trap game where hostile trees try to kill you at every step.",
   genre: ["Rage Game", "Indie Game", "Comedy Game"],
   gamePlatform: ["PC", "Web Browser"],
-  url: "https://treeshateyou.help",
+  url: "https://treeshateyou.help/",
   sameAs: [
     "https://tykenn.itch.io/trees-hate-you",
     "https://store.steampowered.com/app/4171850/Trees_Hate_You/"

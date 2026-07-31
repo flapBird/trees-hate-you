@@ -123,6 +123,7 @@ npm run lint
 |----------|----------|-------------|
 | `DATABASE_URL` | No | PostgreSQL connection string for reviews and contact messages. |
 | `RATE_LIMIT_SECRET` | Recommended | Long random value used to hash abuse-prevention fingerprints. |
+| `NEXT_PUBLIC_GA_MEASUREMENT_ID` | No | Google Analytics 4 measurement ID. Analytics stays disabled when empty. |
 
 ---
 
@@ -142,7 +143,7 @@ directly from metadata routes.
 
 If you fork this project, update the following before deploying:
 - `metadataBase` and all canonical URLs in `layout.tsx` and sub-page layouts
-- Google Analytics measurement ID in `layout.tsx`
+- Google Analytics measurement ID via the `NEXT_PUBLIC_GA_MEASUREMENT_ID` environment variable
 - The ad network key in `AdsterraBanner.tsx`
 - The canonical site URL in `layout.tsx`, `robots.ts`, and `sitemap.ts`
 

@@ -6,6 +6,9 @@ import { useEffect, useState } from "react";
 const CONSENT_KEY = "trees-hate-you-privacy-consent-v1";
 const CONSENT_EVENT = "trees-hate-you-consent-changed";
 
+const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_MEASUREMENT_ID;
+const GA_ID_VALID = /^[A-Z]{2}-[A-Z0-9-]+$/.test(GA_MEASUREMENT_ID ?? "");
+
 export default function GoogleAnalytics() {
   const [enabled, setEnabled] = useState(false);
 
@@ -16,13 +19,13 @@ export default function GoogleAnalytics() {
     return () => window.removeEventListener(CONSENT_EVENT, syncConsent);
   }, []);
 
-  if (!enabled) {
+  if (!enabled || !GA_ID_VALID) {
     return null;
   }
 
   return (
     <>
-      <Script async src="https://www.googletagmanager.com/gtag/js?id=G-FJWM0N3HTC" strategy="afterInteractive" />
+      <Script async src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`} strategy="afterInteractive" />
       <Script id="google-analytics" strategy="afterInteractive">
         {`
           window.dataLayer = window.dataLayer || [];
@@ -34,7 +37,7 @@ export default function GoogleAnalytics() {
             ad_personalization: 'granted'
           });
           gtag('js', new Date());
-          gtag('config', 'G-FJWM0N3HTC', { anonymize_ip: true });
+          gtag('config', '${GA_MEASUREMENT_ID}', { anonymize_ip: true });
         `}
       </Script>
     </>

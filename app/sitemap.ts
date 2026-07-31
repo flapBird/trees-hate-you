@@ -5,7 +5,7 @@ const siteUrl = "https://treeshateyou.help";
 export default function sitemap(): MetadataRoute.Sitemap {
   return [
     {
-      url: siteUrl,
+      url: `${siteUrl}/`,
       changeFrequency: "weekly",
       priority: 1
     },

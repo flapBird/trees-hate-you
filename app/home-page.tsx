@@ -4,7 +4,7 @@ import Image from "next/image";
 import { FormEvent, useEffect, useRef, useState } from "react";
 import AdsterraBanner from "./components/AdsterraBanner";
 import AdsterraBottomBanners from "./components/AdsterraBottomBanners";
-import AdsterraSideBanners from "./components/AdsterraSideBanners";
+import NativeAd from "./components/NativeAd";
 import SiteFooter from "./components/SiteFooter";
 import SiteHeader from "./components/SiteHeader";
 
@@ -356,7 +356,7 @@ export default function HomePage() {
                       : "No approved player ratings yet. Be the first to leave one."}
                 </p>
               </div>
-              <AdsterraSideBanners />
+              <NativeAd />
             </div>
             <form className="review-form" onSubmit={submitReview} aria-busy={formState === "submitting"}>
               <label className="form-honeypot" aria-hidden="true">

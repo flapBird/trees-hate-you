@@ -10,15 +10,50 @@ export default function NativeAd() {
 
   useEffect(() => {
     const root = rootRef.current;
-    if (!root || root.dataset.loaded === "true") return;
+    if (!root) return;
 
-    root.dataset.loaded = "true";
+    const container = root.querySelector<HTMLElement>(
+      "#container-f193185e4c4ba7699185eef77932cfa9"
+    );
 
-    const script = document.createElement("script");
-    script.async = true;
-    script.setAttribute("data-cfasync", "false");
-    script.src = nativeAdScript;
-    root.prepend(script);
+    // The ad network assigns its own generated class names and switches the
+    // four cards to a single column on narrow screens. Mark the element that
+    // directly owns the cards so our mobile CSS can keep the requested 2x2
+    // layout without depending on those unstable class names.
+    const markCardGrid = () => {
+      if (!container) return;
+
+      const candidates = [container, ...container.querySelectorAll<HTMLElement>("div")];
+      const cardGrid = candidates.find((candidate) => {
+        const children = Array.from(candidate.children).filter(
+          (child) => child.tagName !== "SCRIPT" && child.tagName !== "STYLE"
+        );
+
+        return (
+          children.length >= 4 &&
+          children.slice(0, 4).every((child) => child.querySelector("img"))
+        );
+      });
+
+      if (cardGrid) cardGrid.dataset.mobileNativeGrid = "true";
+    };
+
+    const observer = new MutationObserver(markCardGrid);
+    if (container) observer.observe(container, { childList: true, subtree: true });
+
+    if (root.dataset.loaded !== "true") {
+      root.dataset.loaded = "true";
+
+      const script = document.createElement("script");
+      script.async = true;
+      script.setAttribute("data-cfasync", "false");
+      script.src = nativeAdScript;
+      root.prepend(script);
+    }
+
+    markCardGrid();
+
+    return () => observer.disconnect();
   }, []);
 
   return (
